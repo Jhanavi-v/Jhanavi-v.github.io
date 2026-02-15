@@ -1,140 +1,208 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jhanavi | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-color: #f8fafc; /* Light grey-blue background */
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-secondary: #64748b;
-            --accent-color: #cfb53b; /* Purdue Gold-ish tone */
-            --hover-color: #bfa12f;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jhanavi | Portfolio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+<style>
+:root{
+--accent:#cfb53b;
+--text:#1e293b;
+--muted:#64748b;
+}
 
-        .container {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
+/* Background */
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:linear-gradient(135deg,#f8fafc,#eef2f7);
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding:20px;
+}
 
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid var(--bg-color);
-        }
+/* Card */
+.container{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 50px rgba(0,0,0,0.08);
+max-width:420px;
+width:100%;
+text-align:center;
+}
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
+/* Profile */
+.profile-img{
+width:120px;
+height:120px;
+border-radius:50%;
+margin-bottom:15px;
+}
 
-        h2 {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
+h1{margin:0;font-size:1.6rem}
+h2{margin:6px 0 10px;color:var(--accent);font-size:.85rem;letter-spacing:1px;text-transform:uppercase}
 
-        .bio {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
+/* Status */
+.status{
+color:#16a34a;
+font-weight:600;
+font-size:.8rem;
+margin-bottom:10px;
+}
 
-        .link-btn {
-            display: block;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            text-decoration: none;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
+/* Typing */
+.typing{
+color:var(--muted);
+height:22px;
+margin-bottom:15px;
+}
 
-        .link-btn:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+/* Bio */
+.bio{color:var(--muted);font-size:.95rem;line-height:1.6;margin-bottom:20px}
 
-        .social-icons {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
+/* Skills */
+.skills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:25px}
+.skills span{
+background:#f1f5f9;
+padding:6px 12px;
+border-radius:20px;
+font-size:.75rem;
+font-weight:600;
+transition:.2s;
+}
+.skills span:hover{background:var(--accent);color:white}
 
-        .social-icons a {
-            color: var(--text-secondary);
-            font-size: 1.4rem;
-            transition: color 0.2s;
-        }
+/* Buttons */
+.link-btn{
+display:block;
+padding:15px;
+margin-bottom:12px;
+border-radius:12px;
+text-decoration:none;
+color:var(--text);
+background:rgba(248,250,252,.7);
+backdrop-filter:blur(8px);
+border:1px solid rgba(0,0,0,.05);
+font-weight:600;
+position:relative;
+transition:.25s;
+}
+.link-btn::after{
+content:"→";
+position:absolute;
+right:18px;
+opacity:0;
+transition:.25s;
+}
+.link-btn:hover{
+transform:translateY(-3px);
+border-color:var(--accent);
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+.link-btn:hover::after{opacity:1;right:14px}
 
-        .social-icons a:hover {
-            color: var(--accent-color);
-        }
-    </style>
+/* Socials */
+.social-icons{margin-top:25px;display:flex;gap:20px;justify-content:center}
+.social-icons a{color:var(--muted);font-size:1.4rem}
+.social-icons a:hover{color:var(--accent)}
+
+/* Modal */
+.modal{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,.45);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+.modal-content{
+background:white;
+padding:25px;
+border-radius:16px;
+max-width:420px;
+animation:pop .25s ease;
+}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.close{float:right;font-size:1.2rem;cursor:pointer}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <img src="https://ui-avatars.com/api/?name=Jhanavi+V&background=random&size=200" alt="Profile Picture" class="profile-img">
-        
-        <h1>Jhanavi Venkatesh.</h1>
-        <h2>MS Data Science Student @ University of Europe for Applied Sciences </h2>
-        
-        <p class="bio">
-            Engineer in Data & Intelligence.<br>
-            Building robust ML systems, scalable data architectures, and actionable insights.<br>
-            From raw data to deployable products.
-        </p>
+<div class="container">
 
-    <div class="links">
-    <a href="https://acrobat.adobe.com/id/urn:aaid:sc:AP:ca82eb66-d46f-4437-bfa7-ed66f8f5df1c" class="link-btn">View My Resume</a>
-    
-    <a href="https://github.com/Jhanavi-v" class="link-btn">GitHub Projects</a>
-    
-    <a href="https://www.linkedin.com/in/jhanavi-v-240b16213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="link-btn">Connect on LinkedIn</a>
-    
-    <a href="mailto:jhanaviv6@gmail.com" class="link-btn">Contact Me</a>
-    </div>
+<img src="https://ui-avatars.com/api/?name=Jhanavi+V&background=random&size=200" class="profile-img">
 
-        <div class="social-icons">
-            <a href="https://https://www.linkedin.com/in/jhanavi-v-240b16213?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/Jhanavi-v"><i class="fab fa-github"></i></a>
-            <a href="mailto:jhanaviv6@gmail.com"><i class="fas fa-envelope"></i></a>
-        </div>
-    </div>
+<h1>Jhanavi Venkatesh</h1>
+<div class="status">🟢 Open to Working Student Roles</div>
+<h2>MS Data Science Student</h2>
 
-</body>
-</html>
+<p class="typing" id="typing"></p>
+
+<p class="bio">
+Engineer in Data & Intelligence.<br>
+Building ML systems, scalable data architectures & actionable insights.<br>
+From raw data → deployable products.
+</p>
+
+<div class="skills">
+<span>Python</span><span>SQL</span><span>Power BI</span>
+<span>Machine Learning</span><span>Docker</span><span>APIs</span>
+</div>
+
+<a href="https://acrobat.adobe.com/id/urn:aaid:sc:AP:ca82eb66-d46f-4437-bfa7-ed66f8f5df1c" class="link-btn">View Resume</a>
+<a onclick="openProject('dss')" class="link-btn">Transport DSS Project</a>
+<a onclick="openProject('music')" class="link-btn">Music Data Architecture</a>
+<a href="https://github.com/Jhanavi-v" class="link-btn">GitHub</a>
+<a href="https://www.linkedin.com/in/jhanavi-v-240b16213" class="link-btn">LinkedIn</a>
+<a href="mailto:jhanaviv6@gmail.com" class="link-btn">Contact Me</a>
+
+<div class="social-icons">
+<a href="https://www.linkedin.com/in/jhanavi-v-240b16213"><i class="fab fa-linkedin"></i></a>
+<a href="https://github.com/Jhanavi-v"><i class="fab fa-github"></i></a>
+<a href="mailto:jhanaviv6@gmail.com"><i class="fas fa-envelope"></i></a>
+</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">&times;</span>
+<div id="modal-body"></div>
+</div>
+</div>
+
+<script>
+// typing animation
+const roles=["Machine Learning","Data Engineering","Business Intelligence","Deployable AI Systems"];
+let i=0,j=0,del=false;
+function type(){
+let txt=roles[i];
+document.getElementById("typing").textContent=txt.substring(0,j);
+if(!del&&j++===txt.length+1){del=true;setTimeout(type,1200);return;}
+if(del&&j--===0){del=false;i=(i+1)%roles.length;}
+setTimeout(type,del?40:70);
+}
+type();
+
+// modal content
+function openProject(p){
+const content={
+dss:`<h3>Transport Decision Support System</h3>
+<p>Integrated weather, demand and ridership datasets to optimize public transport capacity planning and visualize KPIs.</p>`,
+
+music:`<h3>Music Streaming Data Architecture</h3>
+<p>Designed PostgreSQL schema, REST APIs and advanced SQL analytics to track artist rankings and playlist popularity.</p>`
+};
+document.getElementById("modal-body").innerHTML=content[p];
+document.getElementById("modal").style.display
+```
