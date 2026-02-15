@@ -7,131 +7,123 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-:root{
---accent:#cfb53b;
---text:#0f172a;
---muted:#64748b;
---card:rgba(255,255,255,.7);
---bg:#f8fafc;
-}
-
-body.dark{
---text:#e2e8f0;
---muted:#94a3b8;
---card:rgba(15,23,42,.6);
---bg:#020617;
-}
-
 body{
 margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-background:var(--bg);
-color:var(--text);
+font-family:Inter,system-ui,sans-serif;
+color:#e6edf3;
+background:
+radial-gradient(circle at 20% 20%, rgba(120,119,198,.15), transparent 40%),
+radial-gradient(circle at 80% 60%, rgba(255,182,193,.12), transparent 40%),
+#030712;
 scroll-behavior:smooth;
 }
 
-/* STARFIELD */
-canvas{position:fixed;top:0;left:0;z-index:-1}
-
 /* NAV */
 nav{
-position:fixed;
-top:0;left:0;
-width:100%;
-display:flex;
-justify-content:center;
-gap:30px;
-padding:14px;
-backdrop-filter:blur(12px);
-background:rgba(0,0,0,.15);
+position:fixed;top:0;width:100%;
+display:flex;justify-content:center;gap:40px;
+padding:16px;
+backdrop-filter:blur(18px);
+background:rgba(3,7,18,.55);
+border-bottom:1px solid rgba(255,255,255,.05);
 z-index:10;
 }
-nav a{
-color:white;
-text-decoration:none;
-font-weight:600;
-opacity:.8;
-}
-nav a:hover{opacity:1;color:var(--accent)}
-
-.toggle{position:fixed;top:14px;right:20px;cursor:pointer}
+nav a{color:#cbd5e1;text-decoration:none;font-weight:600}
+nav a:hover{color:#f5c2e7}
 
 /* SECTIONS */
-section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:80px 20px;
-text-align:center;
-}
+section{padding:110px 20px 70px;text-align:center}
 
+/* CARD */
 .card{
-background:var(--card);
-backdrop-filter:blur(18px);
-padding:35px;
-border-radius:20px;
-max-width:800px;
-width:90%;
-box-shadow:0 25px 60px rgba(0,0,0,.25);
-border:1px solid rgba(255,255,255,.1);
+background:rgba(10,14,30,.55);
+backdrop-filter:blur(20px);
+border-radius:22px;
+padding:40px;
+max-width:850px;
+margin:auto;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 10px 40px rgba(0,0,0,.6), inset 0 0 40px rgba(255,255,255,.02);
 }
 
 /* HERO */
-.profile-img{width:120px;height:120px;border-radius:50%}
-h1{margin:10px 0}
-.status{color:#22c55e;font-weight:600}
+.profile-img{
+width:130px;height:130px;border-radius:50%;
+object-fit:cover;
+box-shadow:0 0 25px rgba(255,182,193,.35);
+}
+
+h1{font-size:2rem;margin:10px 0}
+h2{color:#f5c2e7;font-weight:500}
 
 /* SKILLS */
 .skills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:15px}
-.skills span{background:rgba(148,163,184,.2);padding:7px 14px;border-radius:20px;font-size:.8rem}
-
-/* PROJECT GRID */
-.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:20px}
-.project{
-background:rgba(255,255,255,.08);
-padding:20px;border-radius:16px;
-transition:.25s;cursor:pointer
+.skills span{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+padding:7px 14px;border-radius:30px;
 }
-.project:hover{transform:translateY(-6px);border:1px solid var(--accent)}
 
-/* EXPERIENCE */
-.exp{margin-top:15px;text-align:left}
-.exp h3{margin-bottom:4px}
-.exp p{color:var(--muted);margin:0}
+/* PROJECTS */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:25px}
+.project{
+background:rgba(255,255,255,.04);
+border-radius:18px;padding:22px;
+transition:.25s;
+}
+.project:hover{transform:translateY(-6px);box-shadow:0 0 25px rgba(173,216,230,.25)}
+
+.stack{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+.stack span{background:rgba(255,255,255,.06);padding:6px 10px;border-radius:12px;font-size:.75rem}
+
+.repo{
+display:inline-block;margin-top:6px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.1);
+border-radius:12px;padding:10px 16px;
+text-decoration:none;color:white;
+}
+
+/* LEARNING */
+.learning{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px}
+.learning span{
+background:rgba(173,216,230,.15);
+padding:8px 14px;border-radius:30px;
+border:1px solid rgba(173,216,230,.25);
+}
 
 /* CONTACT */
 .contact a{
 display:inline-block;margin:8px;padding:12px 18px;
-border-radius:12px;background:rgba(255,255,255,.1);
-text-decoration:none;color:var(--text)
+border-radius:12px;background:rgba(255,255,255,.08);
+text-decoration:none;color:white;
 }
-.contact a:hover{border:1px solid var(--accent)}
+
+/* STARS */
+canvas{position:fixed;top:0;left:0;z-index:-1}
 </style>
 </head>
 
 <body>
 
-<div class="toggle" onclick="toggleTheme()">🌙</div>
 <canvas id="stars"></canvas>
 
 <nav>
 <a href="#home">Home</a>
 <a href="#about">About</a>
 <a href="#projects">Projects</a>
-<a href="#experience">Experience</a>
+<a href="#learning">Learning</a>
 <a href="#contact">Contact</a>
 </nav>
 
 <!-- HOME -->
 <section id="home">
 <div class="card">
-<img src="https://ui-avatars.com/api/?name=Jhanavi+V&background=random&size=200" class="profile-img">
+<img src="assets/avatar.png" class="profile-img">
 <h1>Jhanavi Venkatesh</h1>
-<div class="status">🟢 Open to Working Student Roles</div>
 <p id="typing"></p>
 <p>Engineer in Data & Intelligence — building ML systems and scalable analytics solutions.</p>
+
 <div class="skills">
 <span>Python</span><span>SQL</span><span>Power BI</span>
 <span>Machine Learning</span><span>Docker</span><span>APIs</span>
@@ -143,10 +135,7 @@ text-decoration:none;color:var(--text)
 <section id="about">
 <div class="card">
 <h2>About Me</h2>
-<p>
-Data Science graduate student focused on turning complex datasets into reliable systems.
-I enjoy designing end-to-end solutions — from ingestion and modeling to deployment and visualization.
-</p>
+<p>Data Science student focused on end-to-end ML systems — from data ingestion and modeling to deployment and visualization.</p>
 </div>
 </section>
 
@@ -157,121 +146,43 @@ I enjoy designing end-to-end solutions — from ingestion and modeling to deploy
 
 <div class="projects">
 
-<!-- PROJECT 1 -->
 <div class="project">
 <h3>Transport Decision Support System</h3>
-<p>Optimized public transport capacity using predictive demand and weather datasets.</p>
-
-<div class="stack">
-<span>Python</span>
-<span>Pandas</span>
-<span>Power BI</span>
-<span>Data Modeling</span>
+<p>Optimized transport capacity using predictive demand datasets.</p>
+<div class="stack"><span>Python</span><span>Pandas</span><span>Power BI</span></div>
+<a class="repo" href="https://github.com/Jhanavi-v/Transport-DSS-Project">GitHub</a>
 </div>
 
-<a class="repo" href="https://github.com/Jhanavi-v/Transport-DSS-Project" target="_blank">
-<i class="fab fa-github"></i> View Repository
-</a>
-</div>
-
-<!-- PROJECT 2 -->
 <div class="project">
-<h3>Music Streaming Data Architecture</h3>
-<p>Designed PostgreSQL schema, REST APIs and analytical queries for rankings & usage tracking.</p>
-
-<div class="stack">
-<span>PostgreSQL</span>
-<span>REST API</span>
-<span>SQL</span>
-<span>Supabase</span>
+<h3>Music Streaming Architecture</h3>
+<p>Designed database schema and analytics queries.</p>
+<div class="stack"><span>PostgreSQL</span><span>REST API</span><span>SQL</span></div>
+<a class="repo" href="https://github.com/Jhanavi-v/Music-Streaming-Data-Architecture">GitHub</a>
 </div>
 
-<a class="repo" href="https://github.com/Jhanavi-v/Music-Streaming-Data-Architecture" target="_blank">
-<i class="fab fa-github"></i> View Repository
-</a>
-</div>
-
-<!-- PROJECT 3 -->
 <div class="project">
-<h3>Diabetes Prediction Analysis</h3>
-<p>Built predictive scoring model with EDA validation and probability interpretation.</p>
-
-<div class="stack">
-<span>Python</span>
-<span>Scikit-Learn</span>
-<span>EDA</span>
-<span>Statistics</span>
-</div>
-
-<a class="repo" href="https://github.com/Jhanavi-v/Data-analytics" target="_blank">
-<i class="fab fa-github"></i> View Repository
-</a>
+<h3>Diabetes Prediction</h3>
+<p>Built predictive scoring model with EDA validation.</p>
+<div class="stack"><span>Python</span><span>Scikit-Learn</span><span>EDA</span></div>
+<a class="repo" href="https://github.com/Jhanavi-v/Data-analytics">GitHub</a>
 </div>
 
 </div>
 </div>
 </section>
 
-<style>
-.stack{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin:12px 0 14px;
-justify-content:center;
-}
-
-.stack span{
-background:rgba(148,163,184,.18);
-padding:6px 10px;
-border-radius:12px;
-font-size:.72rem;
-font-weight:600;
-}
-
-.repo{
-display:inline-block;
-margin-top:6px;
-padding:10px 14px;
-border-radius:10px;
-text-decoration:none;
-font-size:.85rem;
-font-weight:600;
-background:rgba(255,255,255,.1);
-color:var(--text);
-transition:.25s;
-}
-
-.repo:hover{
-border:1px solid var(--accent);
-transform:translateY(-2px);
-}
-
-.project{
-background:rgba(255,255,255,.08);
-padding:20px;
-border-radius:16px;
-transition:.25s;
-cursor:pointer;
-}
-
-.project:hover{
-transform:translateY(-8px);
-box-shadow:0 18px 40px rgba(0,0,0,.25);
-border:1px solid var(--accent);
-}
-</style>
-
-<!-- EXPERIENCE -->
-<section id="experience">
+<!-- LEARNING -->
+<section id="learning">
 <div class="card">
-<h2>Experience</h2>
-
-<div class="exp">
-<h3>Infrastructure Analyst — DXC Technology</h3>
-<p>Built BI dashboards, data models and automated reporting pipelines.</p>
+<h2>Currently Learning</h2>
+<div class="learning">
+<span>Deep Learning</span>
+<span>ML System Design</span>
+<span>Docker Deployment</span>
+<span>Cloud Pipelines</span>
+<span>Feature Engineering</span>
+<span>German B2</span>
 </div>
-
 </div>
 </section>
 
@@ -286,13 +197,6 @@ border:1px solid var(--accent);
 </section>
 
 <script>
-// theme
-function toggleTheme(){
-document.body.classList.toggle("dark");
-localStorage.theme=document.body.classList.contains("dark")?"dark":"light";
-}
-if(localStorage.theme==="dark")document.body.classList.add("dark");
-
 // typing
 const roles=["Machine Learning","Data Engineering","Business Intelligence","Deployable AI Systems"];
 let i=0,j=0,del=false;
@@ -305,12 +209,12 @@ setTimeout(type,del?40:70);
 }
 type();
 
-// stars
+// starfield
 const canvas=document.getElementById("stars");
 const ctx=canvas.getContext("2d");
-let stars=[];
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 window.onresize=resize;resize();
+let stars=[];
 for(let i=0;i<160;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.2,s:Math.random()*0.4});
 function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -323,4 +227,4 @@ animate();
 
 </body>
 </html>
-```
+
