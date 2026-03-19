@@ -8,795 +8,304 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --blush:#f7c5cc;
-  --rose:#e8849a;
-  --berry:#b5365a;
-  --plum:#6b1d4a;
-  --deep:#2a0e24;
-  --cream:#fef6f0;
-  --lilac:#e4d0f4;
-  --mint:#c8f0e6;
-  --gold:#f0c675;
-  --white:#fff;
-  --text:#2a0e24;
-  --text-light:#8a5a6e;
+  --blush:#f7c5cc;--rose:#e8849a;--berry:#b5365a;--plum:#6b1d4a;--deep:#2a0e24;
+  --cream:#fef6f0;--lilac:#e4d0f4;--mint:#c8f0e6;--gold:#f0c675;--white:#fff;
+  --text:#2a0e24;--text-light:#8a5a6e;
 }
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
 a{text-decoration:none;color:inherit}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:128px 128px}
 
-/* GRAIN */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size:128px 128px;
-}
-
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1.2rem 3rem;
-  display:flex;justify-content:space-between;align-items:center;
-  backdrop-filter:blur(20px);background:rgba(254,246,240,0.7);
-  border-bottom:1px solid rgba(181,54,90,0.08);
-  transition:all 0.4s ease;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(254,246,240,0.7);border-bottom:1px solid rgba(181,54,90,0.08);transition:all 0.4s ease}
 nav.scrolled{background:rgba(254,246,240,0.95);box-shadow:0 2px 30px rgba(107,29,74,0.06)}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--berry);letter-spacing:-0.02em}
 .logo span{color:var(--rose);font-style:italic}
-.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
 .nav-links a{font-size:0.85rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-light);transition:color 0.3s}
 .nav-links a:hover{color:var(--berry)}
-.nav-cta{
-  background:linear-gradient(135deg,var(--rose),var(--blush));
-  color:var(--deep);padding:0.6rem 1.4rem;border-radius:50px;
-  font-size:0.8rem;font-weight:600;letter-spacing:0.05em;
-  transition:transform 0.3s,box-shadow 0.3s;
-}
+.nav-cta{background:linear-gradient(135deg,var(--rose),var(--blush));color:var(--deep);padding:0.6rem 1.4rem;border-radius:50px;font-size:0.8rem;font-weight:600;letter-spacing:0.05em;transition:transform 0.3s,box-shadow 0.3s}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(232,132,154,0.35)}
 
-/* HERO */
-.hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:8rem 5% 4rem;position:relative;
-  overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background-image:radial-gradient(circle,rgba(181,54,90,0.06) 1px,transparent 1px);
-  background-size:28px 28px;
-}
-.hero::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:120px;z-index:1;
-  background:linear-gradient(to top,var(--cream),transparent);
-}
+/* LANG TOGGLE */
+.lang-toggle{display:flex;align-items:center;background:var(--white);border:1.5px solid rgba(181,54,90,0.12);border-radius:50px;padding:0.25rem;cursor:pointer;user-select:none;position:relative;overflow:hidden}
+.lang-opt{font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:0.05em;padding:0.35rem 0.75rem;border-radius:50px;transition:all 0.3s ease;color:var(--text-light);z-index:1;position:relative}
+.lang-opt.active{color:var(--white)}
+.lang-slider{position:absolute;height:calc(100% - 4px);width:calc(50% - 2px);background:linear-gradient(135deg,var(--berry),var(--plum));border-radius:50px;top:2px;left:2px;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1)}
+.lang-toggle[data-lang="de"] .lang-slider{transform:translateX(100%)}
+
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;z-index:0;background-image:radial-gradient(circle,rgba(181,54,90,0.06) 1px,transparent 1px);background-size:28px 28px}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;z-index:1;background:linear-gradient(to top,var(--cream),transparent)}
 .hero-bg{position:absolute;inset:0;z-index:0}
-.hero-blob{
-  position:absolute;border-radius:50%;filter:blur(80px);opacity:0.55;
-  animation:blobFloat 12s ease-in-out infinite;
-}
-.hero-blob:nth-child(1){width:550px;height:550px;background:var(--blush);top:-12%;right:-5%;animation-delay:0s}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.55;animation:blobFloat 12s ease-in-out infinite}
+.hero-blob:nth-child(1){width:550px;height:550px;background:var(--blush);top:-12%;right:-5%}
 .hero-blob:nth-child(2){width:450px;height:450px;background:var(--lilac);bottom:-12%;left:-5%;animation-delay:-4s}
 .hero-blob:nth-child(3){width:350px;height:350px;background:var(--mint);top:35%;left:28%;animation-delay:-8s}
 .hero-blob:nth-child(4){width:200px;height:200px;background:var(--gold);top:15%;left:55%;opacity:0.3;animation-delay:-6s}
-
-/* FLOATING DECORATIONS */
-.hero-decor{position:absolute;z-index:1;pointer-events:none}
-.decor-ring{
-  width:180px;height:180px;border-radius:50%;
-  border:2px solid rgba(181,54,90,0.08);
-  position:absolute;top:12%;left:8%;
-  animation:spinSlow 30s linear infinite;
-}
-.decor-ring::after{
-  content:'';position:absolute;top:-4px;left:50%;
-  width:8px;height:8px;border-radius:50%;background:var(--rose);
-  transform:translateX(-50%);
-}
-.decor-ring-2{
-  width:120px;height:120px;border-radius:50%;
-  border:1.5px dashed rgba(228,208,244,0.3);
-  position:absolute;bottom:18%;right:12%;
-  animation:spinSlow 25s linear infinite reverse;
-}
-.decor-cross{
-  position:absolute;top:20%;right:35%;
-  width:20px;height:20px;
-  animation:floatUp 6s ease-in-out infinite;
-}
-.decor-cross::before,.decor-cross::after{
-  content:'';position:absolute;background:var(--rose);border-radius:2px;
-}
+.decor-ring{width:180px;height:180px;border-radius:50%;border:2px solid rgba(181,54,90,0.08);position:absolute;top:12%;left:8%;animation:spinSlow 30s linear infinite}
+.decor-ring::after{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--rose);transform:translateX(-50%)}
+.decor-ring-2{width:120px;height:120px;border-radius:50%;border:1.5px dashed rgba(228,208,244,0.3);position:absolute;bottom:18%;right:12%;animation:spinSlow 25s linear infinite reverse}
+.decor-cross{position:absolute;top:20%;right:35%;width:20px;height:20px;animation:floatUp 6s ease-in-out infinite}
+.decor-cross::before,.decor-cross::after{content:'';position:absolute;background:var(--rose);border-radius:2px}
 .decor-cross::before{width:20px;height:3px;top:8.5px;left:0}
 .decor-cross::after{width:3px;height:20px;top:0;left:8.5px}
-.decor-diamond{
-  position:absolute;bottom:25%;left:15%;
-  width:14px;height:14px;background:rgba(228,208,244,0.4);
-  transform:rotate(45deg);border-radius:2px;
-  animation:floatUp 8s ease-in-out infinite 2s;
-}
-.decor-sparkle{
-  position:absolute;
-  animation:sparkle 3s ease-in-out infinite;
-}
-.decor-sparkle::before{
-  content:'✦';font-size:inherit;color:inherit;
-}
-.decor-sparkle.s1{top:15%;right:28%;font-size:1.2rem;color:var(--rose);animation-delay:0s}
+.decor-diamond{position:absolute;bottom:25%;left:15%;width:14px;height:14px;background:rgba(228,208,244,0.4);transform:rotate(45deg);border-radius:2px;animation:floatUp 8s ease-in-out infinite 2s}
+.decor-sparkle{position:absolute;animation:sparkle 3s ease-in-out infinite}
+.decor-sparkle::before{content:'✦';font-size:inherit;color:inherit}
+.decor-sparkle.s1{top:15%;right:28%;font-size:1.2rem;color:var(--rose)}
 .decor-sparkle.s2{top:65%;left:10%;font-size:0.8rem;color:var(--lilac);animation-delay:1s}
 .decor-sparkle.s3{bottom:30%;right:20%;font-size:1rem;color:var(--blush);animation-delay:2s}
 .decor-sparkle.s4{top:30%;left:40%;font-size:0.7rem;color:var(--gold);animation-delay:0.5s}
-.decor-line{
-  position:absolute;top:70%;left:5%;
-  width:80px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--rose),transparent);
-  opacity:0.3;animation:floatUp 7s ease-in-out infinite 1s;
-}
+.decor-line{position:absolute;top:70%;left:5%;width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--rose),transparent);opacity:0.3;animation:floatUp 7s ease-in-out infinite 1s}
 @keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 @keyframes sparkle{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes blobFloat{
-  0%,100%{transform:translate(0,0) scale(1)}
-  33%{transform:translate(30px,-40px) scale(1.05)}
-  66%{transform:translate(-20px,30px) scale(0.95)}
-}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.05)}66%{transform:translate(-20px,30px) scale(0.95)}}
 
 .hero-content{position:relative;z-index:2;max-width:750px}
-.hero-tag{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  background:rgba(181,54,90,0.08);border:1px solid rgba(181,54,90,0.15);
-  border-radius:50px;padding:0.5rem 1.2rem;margin-bottom:2rem;
-  font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--berry);
-  letter-spacing:0.08em;text-transform:uppercase;
-  animation:fadeUp 1s ease both;
-}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(181,54,90,0.08);border:1px solid rgba(181,54,90,0.15);border-radius:50px;padding:0.5rem 1.2rem;margin-bottom:2rem;font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--berry);letter-spacing:0.08em;text-transform:uppercase;animation:fadeUp 1s ease both}
 .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--berry);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.hero h1{
-  font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);
-  font-weight:900;line-height:1.05;letter-spacing:-0.03em;
-  margin-bottom:1.5rem;
-  animation:fadeUp 1s 0.2s ease both;
-}
-.hero h1 .gradient{
-  background:linear-gradient(135deg,var(--berry),var(--plum),var(--rose));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;margin-bottom:1.5rem;animation:fadeUp 1s 0.2s ease both}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--berry),var(--plum),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero h1 em{font-style:italic;color:var(--rose)}
-.hero p{
-  font-size:1.15rem;line-height:1.8;color:var(--text-light);max-width:580px;
-  margin-bottom:2.5rem;font-weight:300;
-  animation:fadeUp 1s 0.4s ease both;
-}
+.hero p{font-size:1.15rem;line-height:1.8;color:var(--text-light);max-width:580px;margin-bottom:2.5rem;font-weight:300;animation:fadeUp 1s 0.4s ease both}
 .hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 1s 0.6s ease both}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  background:linear-gradient(135deg,var(--berry),var(--plum));
-  color:var(--white);padding:1rem 2rem;border-radius:60px;
-  font-weight:600;font-size:0.95rem;letter-spacing:0.02em;
-  transition:all 0.3s;box-shadow:0 4px 20px rgba(181,54,90,0.25);
-}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--berry),var(--plum));color:var(--white);padding:1rem 2rem;border-radius:60px;font-weight:600;font-size:0.95rem;letter-spacing:0.02em;transition:all 0.3s;box-shadow:0 4px 20px rgba(181,54,90,0.25)}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(181,54,90,0.35)}
-.btn-secondary{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  border:2px solid var(--berry);color:var(--berry);
-  padding:1rem 2rem;border-radius:60px;
-  font-weight:600;font-size:0.95rem;transition:all 0.3s;
-}
+.btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;border:2px solid var(--berry);color:var(--berry);padding:1rem 2rem;border-radius:60px;font-weight:600;font-size:0.95rem;transition:all 0.3s}
 .btn-secondary:hover{background:var(--berry);color:var(--white)}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-
-.hero-visual{
-  position:absolute;right:3%;top:50%;transform:translateY(-50%);
-  z-index:1;width:420px;height:420px;
-  animation:fadeUp 1.2s 0.3s ease both;
-}
-.hero-card{
-  position:absolute;background:var(--white);border-radius:20px;
-  box-shadow:0 20px 60px rgba(42,14,36,0.08);
-  padding:1.5rem;backdrop-filter:blur(10px);
-  transition:transform 0.4s ease;
-}
-.hero-card:hover{transform:scale(1.03) !important}
-.hero-card.card-ml{
-  top:0;right:0;width:220px;transform:rotate(3deg);
-  border:1px solid rgba(228,208,244,0.5);
-}
-.hero-card.card-data{
-  bottom:20px;left:0;width:240px;transform:rotate(-2deg);
-  border:1px solid rgba(200,240,230,0.5);
-}
-.hero-card.card-present{
-  top:45%;right:-20px;width:200px;transform:rotate(1deg);
-  border:1px solid rgba(247,197,204,0.5);
-}
-.card-label{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  text-transform:uppercase;letter-spacing:0.1em;color:var(--text-light);margin-bottom:0.8rem;
-}
+.hero-visual{position:absolute;right:3%;top:50%;transform:translateY(-50%);z-index:1;width:420px;height:420px;animation:fadeUp 1.2s 0.3s ease both}
+.hero-card{position:absolute;background:var(--white);border-radius:20px;box-shadow:0 20px 60px rgba(42,14,36,0.08);padding:1.5rem;backdrop-filter:blur(10px);transition:transform 0.4s ease}
+.hero-card:hover{transform:scale(1.03)!important}
+.hero-card.card-ml{top:0;right:0;width:220px;transform:rotate(3deg);border:1px solid rgba(228,208,244,0.5)}
+.hero-card.card-data{bottom:20px;left:0;width:240px;transform:rotate(-2deg);border:1px solid rgba(200,240,230,0.5)}
+.hero-card.card-present{top:45%;right:-20px;width:200px;transform:rotate(1deg);border:1px solid rgba(247,197,204,0.5)}
+.card-label{font-family:'Space Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-light);margin-bottom:0.8rem}
 .card-metric{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--berry)}
 .card-metric small{font-size:0.9rem;color:var(--rose);font-weight:400}
 .mini-chart{display:flex;align-items:end;gap:3px;height:40px;margin-top:0.8rem}
 .mini-bar{width:12px;border-radius:4px 4px 0 0;animation:growBar 1s ease both}
 @keyframes growBar{from{height:0}to{height:var(--h)}}
-
-/* STATS MARQUEE */
-.stats-strip{
-  background:linear-gradient(135deg,var(--berry),var(--plum));
-  padding:1.2rem 0;overflow:hidden;position:relative;
-}
-.stats-track{
-  display:flex;gap:4rem;animation:marquee 25s linear infinite;width:max-content;
-}
-.stats-track span{
-  font-family:'Space Mono',monospace;font-size:0.85rem;
-  color:rgba(255,255,255,0.9);letter-spacing:0.05em;white-space:nowrap;
-  display:flex;align-items:center;gap:0.5rem;
-}
+.stats-strip{background:linear-gradient(135deg,var(--berry),var(--plum));padding:1.2rem 0;overflow:hidden;position:relative}
+.stats-track{display:flex;gap:4rem;animation:marquee 25s linear infinite;width:max-content}
+.stats-track span{font-family:'Space Mono',monospace;font-size:0.85rem;color:rgba(255,255,255,0.9);letter-spacing:0.05em;white-space:nowrap;display:flex;align-items:center;gap:0.5rem}
 .stats-track .sep{color:rgba(255,255,255,0.3);font-size:1.2rem}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* SECTIONS */
 section{padding:6rem 5%}
-.section-label{
-  font-family:'Space Mono',monospace;font-size:0.7rem;
-  text-transform:uppercase;letter-spacing:0.15em;color:var(--rose);
-  margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem;
-}
+.section-label{font-family:'Space Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--rose);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem}
 .section-label::before{content:'';width:30px;height:1px;background:var(--rose)}
-.section-title{
-  font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);
-  font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem;
-}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem}
 .section-desc{color:var(--text-light);max-width:600px;line-height:1.8;margin-bottom:3rem;font-weight:300}
-
-/* ABOUT */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
-.about-stat{
-  background:var(--white);border-radius:20px;padding:1.8rem;
-  border:1px solid rgba(181,54,90,0.06);text-align:center;
-  transition:all 0.3s ease;
-}
+.about-stat{background:var(--white);border-radius:20px;padding:1.8rem;border:1px solid rgba(181,54,90,0.06);text-align:center;transition:all 0.3s ease}
 .about-stat:hover{transform:translateY(-4px);box-shadow:0 15px 40px rgba(42,14,36,0.06)}
 .about-stat .num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--berry)}
 .about-stat .label{font-size:0.8rem;color:var(--text-light);margin-top:0.3rem;font-weight:400}
 .about-text p{color:var(--text-light);line-height:1.9;font-weight:300;margin-bottom:1rem}
-.about-text .highlight{
-  display:inline;background:linear-gradient(180deg,transparent 60%,rgba(247,197,204,0.4) 60%);
-  font-weight:500;color:var(--text);
-}
-
-/* SKILLS GRID */
+.about-text .highlight{display:inline;background:linear-gradient(180deg,transparent 60%,rgba(247,197,204,0.4) 60%);font-weight:500;color:var(--text)}
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.skill-card{
-  background:var(--white);border-radius:24px;padding:2.5rem 2rem;
-  border:1px solid rgba(181,54,90,0.06);
-  transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-  position:relative;overflow:hidden;
-}
-.skill-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--blush),var(--berry),var(--lilac));
-  transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;
-}
+.skill-card{background:var(--white);border-radius:24px;padding:2.5rem 2rem;border:1px solid rgba(181,54,90,0.06);transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blush),var(--berry),var(--lilac));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
 .skill-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(42,14,36,0.08)}
 .skill-card:hover::before{transform:scaleX(1)}
-.skill-icon{
-  width:56px;height:56px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.5rem;font-size:1.5rem;
-}
+.skill-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.5rem}
 .skill-icon.ds{background:linear-gradient(135deg,rgba(200,240,230,0.5),rgba(200,240,230,0.2))}
 .skill-icon.ml{background:linear-gradient(135deg,rgba(228,208,244,0.5),rgba(228,208,244,0.2))}
 .skill-icon.present{background:linear-gradient(135deg,rgba(247,197,204,0.5),rgba(247,197,204,0.2))}
 .skill-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:0.6rem}
 .skill-card p{color:var(--text-light);font-size:0.9rem;line-height:1.7;font-weight:300}
 .skill-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.2rem}
-.skill-tags span{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  background:rgba(181,54,90,0.06);color:var(--berry);
-  padding:0.3rem 0.7rem;border-radius:20px;letter-spacing:0.03em;
-}
-
-/* PRESENTING */
+.skill-tags span{font-family:'Space Mono',monospace;font-size:0.65rem;background:rgba(181,54,90,0.06);color:var(--berry);padding:0.3rem 0.7rem;border-radius:20px;letter-spacing:0.03em}
 .presenting-section{background:linear-gradient(180deg,var(--cream),rgba(228,208,244,0.15),var(--cream))}
 .present-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.present-card{
-  background:var(--white);border-radius:20px;padding:2rem;
-  border:1px solid rgba(181,54,90,0.06);transition:all 0.4s ease;position:relative;
-}
+.present-card{background:var(--white);border-radius:20px;padding:2rem;border:1px solid rgba(181,54,90,0.06);transition:all 0.4s ease;position:relative}
 .present-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(42,14,36,0.08)}
-.present-card .present-number{
-  font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;
-  color:rgba(181,54,90,0.06);position:absolute;top:1rem;right:1.5rem;line-height:1;
-}
-.present-type{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  text-transform:uppercase;letter-spacing:0.1em;color:var(--rose);margin-bottom:0.8rem;
-}
+.present-card .present-number{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:rgba(181,54,90,0.06);position:absolute;top:1rem;right:1.5rem;line-height:1}
+.present-type{font-family:'Space Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--rose);margin-bottom:0.8rem}
 .present-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;position:relative}
 .present-card p{color:var(--text-light);font-size:0.85rem;line-height:1.6;font-weight:300}
 .present-meta{display:flex;gap:1rem;margin-top:1rem;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--text-light)}
 .present-meta span{display:flex;align-items:center;gap:0.3rem}
-
-/* PROJECTS */
 .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-.project-card{
-  background:var(--white);border-radius:24px;overflow:hidden;
-  border:1px solid rgba(181,54,90,0.06);transition:all 0.4s ease;position:relative;
-}
+.project-card{background:var(--white);border-radius:24px;overflow:hidden;border:1px solid rgba(181,54,90,0.06);transition:all 0.4s ease;position:relative}
 .project-card:hover{transform:translateY(-6px);box-shadow:0 25px 70px rgba(42,14,36,0.1)}
 .project-thumb{height:200px;position:relative;overflow:hidden}
-.project-thumb .overlay{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity 0.3s;
-  background:linear-gradient(135deg,rgba(181,54,90,0.85),rgba(107,29,74,0.9));
-}
+.project-thumb .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;background:linear-gradient(135deg,rgba(181,54,90,0.85),rgba(107,29,74,0.9))}
 .project-card:hover .overlay{opacity:1}
 .overlay-text{color:var(--white);font-weight:600;font-size:0.9rem;letter-spacing:0.08em;text-transform:uppercase}
 .project-info{padding:1.8rem}
-.project-type{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  text-transform:uppercase;letter-spacing:0.1em;color:var(--rose);margin-bottom:0.6rem;
-}
+.project-type{font-family:'Space Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--rose);margin-bottom:0.6rem}
 .project-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:0.5rem}
 .project-card p{color:var(--text-light);font-size:0.85rem;line-height:1.7;font-weight:300}
 .project-tags{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:1rem}
-.project-tags span{
-  font-family:'Space Mono',monospace;font-size:0.6rem;
-  background:rgba(181,54,90,0.06);color:var(--berry);
-  padding:0.25rem 0.6rem;border-radius:20px;
-}
-
-/* EXPERIENCE TIMELINE */
+.project-tags span{font-family:'Space Mono',monospace;font-size:0.6rem;background:rgba(181,54,90,0.06);color:var(--berry);padding:0.25rem 0.6rem;border-radius:20px}
 .timeline{max-width:700px;position:relative;padding-left:3rem}
 .timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--blush),var(--berry),var(--lilac))}
 .timeline-item{position:relative;margin-bottom:3rem}
-.timeline-dot{
-  position:absolute;left:-2.55rem;top:0.3rem;width:18px;height:18px;
-  border-radius:50%;background:var(--white);border:3px solid var(--berry);z-index:1;
-}
+.timeline-dot{position:absolute;left:-2.55rem;top:0.3rem;width:18px;height:18px;border-radius:50%;background:var(--white);border:3px solid var(--berry);z-index:1}
 .timeline-date{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--rose);letter-spacing:0.08em;margin-bottom:0.4rem}
 .timeline-item h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:0.2rem}
 .timeline-item .company{color:var(--berry);font-weight:500;font-size:0.9rem;margin-bottom:0.5rem}
 .timeline-item p{color:var(--text-light);font-size:0.88rem;line-height:1.7;font-weight:300}
-
-/* TECH STACK */
 .tech-grid{display:flex;flex-wrap:wrap;gap:1rem}
-.tech-pill{
-  display:flex;align-items:center;gap:0.6rem;
-  background:var(--white);border:1px solid rgba(181,54,90,0.08);
-  border-radius:60px;padding:0.8rem 1.5rem;transition:all 0.3s ease;
-}
+.tech-pill{display:flex;align-items:center;gap:0.6rem;background:var(--white);border:1px solid rgba(181,54,90,0.08);border-radius:60px;padding:0.8rem 1.5rem;transition:all 0.3s ease}
 .tech-pill:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(42,14,36,0.06);border-color:var(--rose)}
 .tech-pill .tech-dot{width:8px;height:8px;border-radius:50%}
 .tech-pill span{font-size:0.85rem;font-weight:500}
-
-/* LANGUAGES */
 .lang-grid{display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:2rem}
-.lang-card{
-  background:var(--white);border-radius:16px;padding:1.5rem 2rem;
-  border:1px solid rgba(181,54,90,0.06);min-width:150px;text-align:center;
-  transition:all 0.3s ease;
-}
+.lang-card{background:var(--white);border-radius:16px;padding:1.5rem 2rem;border:1px solid rgba(181,54,90,0.06);min-width:150px;text-align:center;transition:all 0.3s ease}
 .lang-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(42,14,36,0.06)}
 .lang-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.3rem}
 .lang-card .level{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--rose);letter-spacing:0.05em}
-
-/* HOBBIES */
 .hobbies-strip{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:1.5rem}
-.hobby-tag{
-  background:linear-gradient(135deg,rgba(247,197,204,0.2),rgba(228,208,244,0.2));
-  border:1px solid rgba(181,54,90,0.08);border-radius:50px;
-  padding:0.6rem 1.4rem;font-size:0.85rem;font-weight:400;color:var(--text);
-  transition:all 0.3s;
-}
+.hobby-tag{background:linear-gradient(135deg,rgba(247,197,204,0.2),rgba(228,208,244,0.2));border:1px solid rgba(181,54,90,0.08);border-radius:50px;padding:0.6rem 1.4rem;font-size:0.85rem;font-weight:400;color:var(--text);transition:all 0.3s}
 .hobby-tag:hover{transform:translateY(-2px);border-color:var(--rose);background:var(--white)}
-
-/* CTA */
-.cta-section{
-  text-align:center;padding:8rem 5%;
-  background:linear-gradient(180deg,var(--cream),rgba(247,197,204,0.15));
-}
-.cta-section h2{
-  font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);
-  font-weight:900;margin-bottom:1.5rem;letter-spacing:-0.02em;
-}
+.cta-section{text-align:center;padding:8rem 5%;background:linear-gradient(180deg,var(--cream),rgba(247,197,204,0.15))}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:900;margin-bottom:1.5rem;letter-spacing:-0.02em}
 .cta-section p{color:var(--text-light);max-width:500px;margin:0 auto 2.5rem;line-height:1.8;font-weight:300}
 .cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .cta-links{display:flex;gap:2rem;justify-content:center;margin-top:2rem}
-.cta-links a{
-  font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--berry);
-  letter-spacing:0.05em;transition:color 0.3s;border-bottom:1px solid transparent;
-}
+.cta-links a{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--berry);letter-spacing:0.05em;transition:color 0.3s;border-bottom:1px solid transparent}
 .cta-links a:hover{border-bottom-color:var(--berry)}
-
-/* FOOTER */
-footer{
-  background:var(--deep);color:rgba(255,255,255,0.6);
-  padding:3rem 5%;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;
-}
+footer{background:var(--deep);color:rgba(255,255,255,0.6);padding:3rem 5%;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem}
 footer .footer-brand{font-family:'Playfair Display',serif;color:var(--blush);font-size:1.2rem;font-weight:700}
 .footer-links{display:flex;gap:1.5rem}
 .footer-links a{color:rgba(255,255,255,0.5);transition:color 0.3s;font-size:0.85rem}
 .footer-links a:hover{color:var(--blush)}
-
-/* SCROLL ANIMATIONS */
 .reveal{opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
-
-/* RESPONSIVE */
-@media(max-width:1024px){
-  .hero-visual{display:none}
-  .skills-grid,.projects-grid,.present-grid{grid-template-columns:1fr 1fr}
-  .about-grid{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  nav{padding:1rem 1.5rem}
-  .nav-links{display:none}
-  section{padding:4rem 5%}
-  .skills-grid,.projects-grid,.present-grid{grid-template-columns:1fr}
-  .hero{padding:7rem 5% 3rem}
-  .about-stats{grid-template-columns:1fr 1fr}
-  footer{flex-direction:column;gap:1.5rem;text-align:center}
-}
+@media(max-width:1024px){.hero-visual{display:none}.skills-grid,.projects-grid,.present-grid{grid-template-columns:1fr 1fr}.about-grid{grid-template-columns:1fr}}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links .nav-text-link{display:none}section{padding:4rem 5%}.skills-grid,.projects-grid,.present-grid{grid-template-columns:1fr}.hero{padding:7rem 5% 3rem}.about-stats{grid-template-columns:1fr 1fr}footer{flex-direction:column;gap:1.5rem;text-align:center}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="navbar">
   <a href="#" class="logo">Jhanavi<span>V.</span></a>
   <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#presenting">Presenting</a>
-    <a href="#projects">Projects</a>
-    <a href="#experience">Experience</a>
-    <a href="#contact" class="nav-cta">Let's Connect</a>
+    <a href="#about" class="nav-text-link" data-i18n="nav_about">About</a>
+    <a href="#skills" class="nav-text-link" data-i18n="nav_skills">Skills</a>
+    <a href="#presenting" class="nav-text-link" data-i18n="nav_presenting">Speaking</a>
+    <a href="#projects" class="nav-text-link" data-i18n="nav_projects">Projects</a>
+    <a href="#experience" class="nav-text-link" data-i18n="nav_experience">Experience</a>
+    <a href="#contact" class="nav-cta" data-i18n="nav_connect">Let's Connect</a>
+    <div class="lang-toggle" data-lang="en" id="langToggle" title="Switch language">
+      <div class="lang-slider"></div>
+      <span class="lang-opt active" data-l="en">EN</span>
+      <span class="lang-opt" data-l="de">DE</span>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-blob"></div>
-    <div class="hero-blob"></div>
-    <div class="hero-blob"></div>
-    <div class="hero-blob"></div>
-  </div>
-  <!-- Decorative elements -->
-  <div class="decor-ring"></div>
-  <div class="decor-ring-2"></div>
-  <div class="decor-cross"></div>
-  <div class="decor-diamond"></div>
-  <div class="decor-sparkle s1"></div>
-  <div class="decor-sparkle s2"></div>
-  <div class="decor-sparkle s3"></div>
-  <div class="decor-sparkle s4"></div>
-  <div class="decor-line"></div>
+  <div class="hero-bg"><div class="hero-blob"></div><div class="hero-blob"></div><div class="hero-blob"></div><div class="hero-blob"></div></div>
+  <div class="decor-ring"></div><div class="decor-ring-2"></div><div class="decor-cross"></div><div class="decor-diamond"></div>
+  <div class="decor-sparkle s1"></div><div class="decor-sparkle s2"></div><div class="decor-sparkle s3"></div><div class="decor-sparkle s4"></div><div class="decor-line"></div>
   <div class="hero-content">
-    <div class="hero-tag"><span class="dot"></span> MSc Data Science · Berlin, Germany</div>
-    <h1>
-      Turning <span class="gradient">data</span> into<br>
-      stories that <em>matter</em>
-    </h1>
-    <p>Data Scientist & ML enthusiast with 2.5 years of experience building BI solutions, ML pipelines, and presenting complex insights to cross-functional teams. Currently pursuing my MSc in Data Science at UE Potsdam.</p>
+    <div class="hero-tag"><span class="dot"></span> <span data-i18n="hero_tag">MSc Data Science · Berlin, Germany</span></div>
+    <h1 data-i18n-html="hero_title">Turning <span class="gradient">data</span> into<br>stories that <em>matter</em></h1>
+    <p data-i18n="hero_desc">Data Scientist & ML enthusiast with 2.5 years of experience building BI solutions, ML pipelines, and presenting complex insights to cross-functional teams. Currently pursuing my MSc in Data Science at UE Potsdam.</p>
     <div class="hero-buttons">
-      <a href="#projects" class="btn-primary">View My Work →</a>
-      <a href="mailto:jhanaviv6@gmail.com" class="btn-secondary">Get In Touch</a>
+      <a href="#projects" class="btn-primary" data-i18n="hero_btn_work">View My Work →</a>
+      <a href="mailto:jhanaviv6@gmail.com" class="btn-secondary" data-i18n="hero_btn_contact">Get In Touch</a>
     </div>
   </div>
   <div class="hero-visual">
     <div class="hero-card card-ml">
-      <div class="card-label">Reporting Effort Saved</div>
+      <div class="card-label" data-i18n="card_effort">Reporting Effort Saved</div>
       <div class="card-metric">~40<small>%</small></div>
-      <div class="mini-chart">
-        <div class="mini-bar" style="--h:15px;background:var(--blush);animation-delay:0.1s"></div>
-        <div class="mini-bar" style="--h:22px;background:var(--blush);animation-delay:0.2s"></div>
-        <div class="mini-bar" style="--h:18px;background:var(--rose);animation-delay:0.3s"></div>
-        <div class="mini-bar" style="--h:30px;background:var(--rose);animation-delay:0.4s"></div>
-        <div class="mini-bar" style="--h:25px;background:var(--berry);animation-delay:0.5s"></div>
-        <div class="mini-bar" style="--h:35px;background:var(--berry);animation-delay:0.6s"></div>
-        <div class="mini-bar" style="--h:40px;background:var(--plum);animation-delay:0.7s"></div>
-      </div>
+      <div class="mini-chart"><div class="mini-bar" style="--h:15px;background:var(--blush);animation-delay:.1s"></div><div class="mini-bar" style="--h:22px;background:var(--blush);animation-delay:.2s"></div><div class="mini-bar" style="--h:18px;background:var(--rose);animation-delay:.3s"></div><div class="mini-bar" style="--h:30px;background:var(--rose);animation-delay:.4s"></div><div class="mini-bar" style="--h:25px;background:var(--berry);animation-delay:.5s"></div><div class="mini-bar" style="--h:35px;background:var(--berry);animation-delay:.6s"></div><div class="mini-bar" style="--h:40px;background:var(--plum);animation-delay:.7s"></div></div>
     </div>
     <div class="hero-card card-data">
-      <div class="card-label">Power BI Dashboards</div>
+      <div class="card-label" data-i18n="card_dashboards">Power BI Dashboards</div>
       <div class="card-metric">10<small>+</small></div>
-      <div class="mini-chart">
-        <div class="mini-bar" style="--h:20px;background:var(--mint);animation-delay:0.2s"></div>
-        <div class="mini-bar" style="--h:28px;background:var(--mint);animation-delay:0.3s"></div>
-        <div class="mini-bar" style="--h:16px;background:rgba(200,240,230,0.7);animation-delay:0.4s"></div>
-        <div class="mini-bar" style="--h:35px;background:var(--mint);animation-delay:0.5s"></div>
-        <div class="mini-bar" style="--h:22px;background:rgba(200,240,230,0.7);animation-delay:0.6s"></div>
-        <div class="mini-bar" style="--h:40px;background:var(--mint);animation-delay:0.7s"></div>
-      </div>
+      <div class="mini-chart"><div class="mini-bar" style="--h:20px;background:var(--mint);animation-delay:.2s"></div><div class="mini-bar" style="--h:28px;background:var(--mint);animation-delay:.3s"></div><div class="mini-bar" style="--h:16px;background:rgba(200,240,230,0.7);animation-delay:.4s"></div><div class="mini-bar" style="--h:35px;background:var(--mint);animation-delay:.5s"></div><div class="mini-bar" style="--h:22px;background:rgba(200,240,230,0.7);animation-delay:.6s"></div><div class="mini-bar" style="--h:40px;background:var(--mint);animation-delay:.7s"></div></div>
     </div>
     <div class="hero-card card-present">
-      <div class="card-label">Cross-Functional Teams</div>
+      <div class="card-label" data-i18n="card_teams">Cross-Functional Teams</div>
       <div class="card-metric">5<small>+</small></div>
-      <div style="display:flex;gap:4px;margin-top:0.5rem">
-        <div style="width:40px;height:4px;border-radius:2px;background:var(--blush)"></div>
-        <div style="width:60px;height:4px;border-radius:2px;background:var(--rose)"></div>
-        <div style="width:30px;height:4px;border-radius:2px;background:var(--berry)"></div>
-      </div>
+      <div style="display:flex;gap:4px;margin-top:.5rem"><div style="width:40px;height:4px;border-radius:2px;background:var(--blush)"></div><div style="width:60px;height:4px;border-radius:2px;background:var(--rose)"></div><div style="width:30px;height:4px;border-radius:2px;background:var(--berry)"></div></div>
     </div>
   </div>
 </section>
 
-<!-- STATS MARQUEE -->
-<div class="stats-strip">
-  <div class="stats-track">
-    <span>✦ Python</span><span class="sep">·</span>
-    <span>✦ SQL</span><span class="sep">·</span>
-    <span>✦ TensorFlow</span><span class="sep">·</span>
-    <span>✦ Scikit-Learn</span><span class="sep">·</span>
-    <span>✦ Power BI</span><span class="sep">·</span>
-    <span>✦ PostgreSQL</span><span class="sep">·</span>
-    <span>✦ Pandas</span><span class="sep">·</span>
-    <span>✦ REST APIs</span><span class="sep">·</span>
-    <span>✦ Docker</span><span class="sep">·</span>
-    <span>✦ Tableau</span><span class="sep">·</span>
-    <span>✦ DAX</span><span class="sep">·</span>
-    <span>✦ NumPy</span><span class="sep">·</span>
-    <span>✦ Git/GitHub</span><span class="sep">·</span>
-    <span>✦ Data Storytelling</span><span class="sep">·</span>
-    <span>✦ Python</span><span class="sep">·</span>
-    <span>✦ SQL</span><span class="sep">·</span>
-    <span>✦ TensorFlow</span><span class="sep">·</span>
-    <span>✦ Scikit-Learn</span><span class="sep">·</span>
-    <span>✦ Power BI</span><span class="sep">·</span>
-    <span>✦ PostgreSQL</span><span class="sep">·</span>
-    <span>✦ Pandas</span><span class="sep">·</span>
-    <span>✦ REST APIs</span><span class="sep">·</span>
-    <span>✦ Docker</span><span class="sep">·</span>
-    <span>✦ Tableau</span><span class="sep">·</span>
-    <span>✦ DAX</span><span class="sep">·</span>
-    <span>✦ NumPy</span><span class="sep">·</span>
-    <span>✦ Git/GitHub</span><span class="sep">·</span>
-    <span>✦ Data Storytelling</span><span class="sep">·</span>
-  </div>
-</div>
+<div class="stats-strip"><div class="stats-track">
+  <span>✦ Python</span><span class="sep">·</span><span>✦ SQL</span><span class="sep">·</span><span>✦ TensorFlow</span><span class="sep">·</span><span>✦ Scikit-Learn</span><span class="sep">·</span><span>✦ Power BI</span><span class="sep">·</span><span>✦ PostgreSQL</span><span class="sep">·</span><span>✦ Pandas</span><span class="sep">·</span><span>✦ REST APIs</span><span class="sep">·</span><span>✦ Docker</span><span class="sep">·</span><span>✦ Tableau</span><span class="sep">·</span><span>✦ DAX</span><span class="sep">·</span><span>✦ NumPy</span><span class="sep">·</span><span>✦ Git/GitHub</span><span class="sep">·</span><span>✦ Data Storytelling</span><span class="sep">·</span>
+  <span>✦ Python</span><span class="sep">·</span><span>✦ SQL</span><span class="sep">·</span><span>✦ TensorFlow</span><span class="sep">·</span><span>✦ Scikit-Learn</span><span class="sep">·</span><span>✦ Power BI</span><span class="sep">·</span><span>✦ PostgreSQL</span><span class="sep">·</span><span>✦ Pandas</span><span class="sep">·</span><span>✦ REST APIs</span><span class="sep">·</span><span>✦ Docker</span><span class="sep">·</span><span>✦ Tableau</span><span class="sep">·</span><span>✦ DAX</span><span class="sep">·</span><span>✦ NumPy</span><span class="sep">·</span><span>✦ Git/GitHub</span><span class="sep">·</span><span>✦ Data Storytelling</span><span class="sep">·</span>
+</div></div>
 
-<!-- ABOUT -->
 <section id="about">
-  <div class="section-label">About Me</div>
-  <h2 class="section-title">Hi, I'm Jhanavi ✨</h2>
+  <div class="section-label" data-i18n="about_label">About Me</div>
+  <h2 class="section-title" data-i18n="about_title">Hi, I'm Jhanavi ✨</h2>
   <div class="about-grid">
     <div class="about-text">
-      <p>I'm a <span class="highlight">data-driven analytics professional</span> currently pursuing my MSc in Data Science at the University of Europe for Applied Sciences in Potsdam, Germany. With a background in Electronics & Communication Engineering from Visvesvaraya Technological University and 2.5 years at DXC Technology, I've built a strong foundation in translating complex data into clear, impactful stories.</p>
-      <p>I'm passionate about <span class="highlight">machine learning, predictive analytics, and AI-driven automation</span> — and equally passionate about communicating those insights to real people. Whether it's presenting dashboards to C-suite stakeholders, leading cultural events as head of my college cultural committee, or workshopping data literacy with non-technical teams, I thrive at the intersection of tech and communication.</p>
-      <p>When I'm not wrangling data, you'll find me stargazing, painting, practicing Kathak, solving puzzles, or on the badminton court.</p>
+      <p data-i18n-html="about_p1">I'm a <span class="highlight">data-driven analytics professional</span> currently pursuing my MSc in Data Science at the University of Europe for Applied Sciences in Potsdam, Germany. With a background in Electronics & Communication Engineering from Visvesvaraya Technological University and 2.5 years at DXC Technology, I've built a strong foundation in translating complex data into clear, impactful stories.</p>
+      <p data-i18n-html="about_p2">I'm passionate about <span class="highlight">machine learning, predictive analytics, and AI-driven automation</span> — and equally passionate about communicating those insights to real people. Whether it's presenting dashboards to C-suite stakeholders, leading cultural events as head of my college cultural committee, or workshopping data literacy with non-technical teams, I thrive at the intersection of tech and communication.</p>
+      <p data-i18n="about_p3">When I'm not wrangling data, you'll find me stargazing, painting, practicing Kathak, solving puzzles, or on the badminton court.</p>
     </div>
     <div class="about-stats">
-      <div class="about-stat reveal"><div class="num">2.5</div><div class="label">Years Experience</div></div>
-      <div class="about-stat reveal"><div class="num">10+</div><div class="label">Dashboards Built</div></div>
-      <div class="about-stat reveal"><div class="num">40%</div><div class="label">Reporting Effort Reduced</div></div>
-      <div class="about-stat reveal"><div class="num">15%</div><div class="label">Faster Incident Resolution</div></div>
+      <div class="about-stat reveal"><div class="num">2.5</div><div class="label" data-i18n="stat_years">Years Experience</div></div>
+      <div class="about-stat reveal"><div class="num">10+</div><div class="label" data-i18n="stat_dashboards">Dashboards Built</div></div>
+      <div class="about-stat reveal"><div class="num">40%</div><div class="label" data-i18n="stat_reporting">Reporting Effort Reduced</div></div>
+      <div class="about-stat reveal"><div class="num">15%</div><div class="label" data-i18n="stat_incident">Faster Incident Resolution</div></div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
-  <div class="section-label">What I Do</div>
-  <h2 class="section-title">Core Expertise</h2>
-  <p class="section-desc">Bridging the gap between complex ML models and real-world impact through technical depth and clear communication.</p>
+  <div class="section-label" data-i18n="skills_label">What I Do</div>
+  <h2 class="section-title" data-i18n="skills_title">Core Expertise</h2>
+  <p class="section-desc" data-i18n="skills_desc">Bridging the gap between complex ML models and real-world impact through technical depth and clear communication.</p>
   <div class="skills-grid">
-    <div class="skill-card reveal">
-      <div class="skill-icon ds">📊</div>
-      <h3>Data Science & Analytics</h3>
-      <p>End-to-end BI projects — from SQL data extraction and preparation to interactive dashboard delivery. Skilled in building robust data models and visualizations that drive decisions across Operations, Finance, and Marketing.</p>
-      <div class="skill-tags">
-        <span>Pandas</span><span>NumPy</span><span>SQL</span><span>Power BI</span><span>Tableau</span><span>DAX</span><span>EDA</span>
-      </div>
-    </div>
-    <div class="skill-card reveal">
-      <div class="skill-icon ml">🧠</div>
-      <h3>Machine Learning & AI</h3>
-      <p>Building ML pipelines from feature engineering through model training and deployment. Experience with classification models, predictive analytics, NLP, and emerging AI workflows including LLM prompt engineering and RAG concepts.</p>
-      <div class="skill-tags">
-        <span>Scikit-Learn</span><span>TensorFlow</span><span>MLOps</span><span>NLP</span><span>Predictive Modeling</span><span>RAG</span>
-      </div>
-    </div>
-    <div class="skill-card reveal">
-      <div class="skill-icon present">🎤</div>
-      <h3>Presenting & Storytelling</h3>
-      <p>Translating complex analytical outputs into intuitive visual narratives for diverse audiences — from weekly stakeholder reports to executive dashboards. Experienced in leading workshops, cultural events, and cross-functional communications.</p>
-      <div class="skill-tags">
-        <span>Data Viz</span><span>Stakeholder Comms</span><span>Dashboards</span><span>Workshops</span><span>Leadership</span>
-      </div>
-    </div>
+    <div class="skill-card reveal"><div class="skill-icon ds">📊</div><h3 data-i18n="skill1_title">Data Science & Analytics</h3><p data-i18n="skill1_desc">End-to-end BI projects — from SQL data extraction and preparation to interactive dashboard delivery. Skilled in building robust data models and visualizations that drive decisions across Operations, Finance, and Marketing.</p><div class="skill-tags"><span>Pandas</span><span>NumPy</span><span>SQL</span><span>Power BI</span><span>Tableau</span><span>DAX</span><span>EDA</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon ml">🧠</div><h3 data-i18n="skill2_title">Machine Learning & AI</h3><p data-i18n="skill2_desc">Building ML pipelines from feature engineering through model training and deployment. Experience with classification models, predictive analytics, NLP, and emerging AI workflows including LLM prompt engineering and RAG concepts.</p><div class="skill-tags"><span>Scikit-Learn</span><span>TensorFlow</span><span>MLOps</span><span>NLP</span><span>Predictive Modeling</span><span>RAG</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon present">🎤</div><h3 data-i18n="skill3_title">Presenting & Storytelling</h3><p data-i18n="skill3_desc">Translating complex analytical outputs into intuitive visual narratives for diverse audiences — from weekly stakeholder reports to executive dashboards. Experienced in leading workshops, cultural events, and cross-functional communications.</p><div class="skill-tags"><span>Data Viz</span><span>Stakeholder Comms</span><span>Dashboards</span><span>Workshops</span><span>Leadership</span></div></div>
   </div>
 </section>
 
-<!-- PRESENTING SHOWCASE -->
 <section id="presenting" class="presenting-section">
-  <div class="section-label">Communication & Leadership</div>
-  <h2 class="section-title">Presenting & Storytelling</h2>
-  <p class="section-desc">I believe the best data science is the kind that gets communicated. Here's how I bring data to life for real audiences.</p>
+  <div class="section-label" data-i18n="pres_label">Communication & Leadership</div>
+  <h2 class="section-title" data-i18n="pres_title">Presenting & Storytelling</h2>
+  <p class="section-desc" data-i18n="pres_desc">I believe the best data science is the kind that gets communicated. Here's how I bring data to life for real audiences.</p>
   <div class="present-grid">
-    <div class="present-card reveal">
-      <div class="present-number">01</div>
-      <div class="present-type">Stakeholder Dashboards</div>
-      <h3>Executive BI Reporting</h3>
-      <p>Designed and presented 10+ interactive Power BI dashboards to department leads across Marketing, Finance, and Operations — translating complex KPIs into clear visual stories that drove decision-making.</p>
-      <div class="present-meta">
-        <span>📊 10+ dashboards</span>
-        <span>👥 5+ teams</span>
-      </div>
-    </div>
-    <div class="present-card reveal">
-      <div class="present-number">02</div>
-      <div class="present-type">Weekly Reporting</div>
-      <h3>Performance Reviews & Ad Hoc Analysis</h3>
-      <p>Delivered weekly performance reports and deep-dive analyses to department leads, identifying trends and recommending data-driven improvements that contributed to a 15% reduction in incident resolution time.</p>
-      <div class="present-meta">
-        <span>📈 Weekly cadence</span>
-        <span>⚡ 15% impact</span>
-      </div>
-    </div>
-    <div class="present-card reveal">
-      <div class="present-number">03</div>
-      <div class="present-type">Technical Translation</div>
-      <h3>Business-to-Technical Bridging</h3>
-      <p>Acted as the primary bridge between business stakeholders and technical teams at DXC's SAP DCM Operations Center, translating complex requirements into actionable BI solutions and integration components.</p>
-      <div class="present-meta">
-        <span>🔗 Cross-functional</span>
-        <span>🏢 SAP DCM</span>
-      </div>
-    </div>
-    <div class="present-card reveal">
-      <div class="present-number">04</div>
-      <div class="present-type">Data Literacy</div>
-      <h3>Self-Service BI Enablement</h3>
-      <p>Enabled non-technical users to access and interpret data independently by building self-service BI tools with intuitive dashboards and comprehensive documentation.</p>
-      <div class="present-meta">
-        <span>📖 Self-service BI</span>
-        <span>👥 Non-tech users</span>
-      </div>
-    </div>
-    <div class="present-card reveal">
-      <div class="present-number">05</div>
-      <div class="present-type">Cultural Leadership</div>
-      <h3>Head of Cultural Committee</h3>
-      <p>Led the college cultural committee, organizing and presenting large-scale events — honing public speaking, coordination, and audience engagement skills that carry into every data presentation I give.</p>
-      <div class="present-meta">
-        <span>🎭 Event leadership</span>
-        <span>🎤 Public speaking</span>
-      </div>
-    </div>
-    <div class="present-card reveal">
-      <div class="present-number">06</div>
-      <div class="present-type">Project Storytelling</div>
-      <h3>ML Outputs to Visual Narratives</h3>
-      <p>Built interactive dashboards translating complex ML predictions into clear visual narratives for the Berlin Transport DSS project — enabling non-technical Operations Managers to confidently act on insights.</p>
-      <div class="present-meta">
-        <span>🚌 Berlin Transport DSS</span>
-        <span>🤖 ML → Story</span>
-      </div>
-    </div>
+    <div class="present-card reveal"><div class="present-number">01</div><div class="present-type" data-i18n="pres1_type">Stakeholder Dashboards</div><h3 data-i18n="pres1_title">Executive BI Reporting</h3><p data-i18n="pres1_desc">Designed and presented 10+ interactive Power BI dashboards to department leads across Marketing, Finance, and Operations — translating complex KPIs into clear visual stories that drove decision-making.</p><div class="present-meta"><span>📊 10+ Dashboards</span><span>👥 5+ Teams</span></div></div>
+    <div class="present-card reveal"><div class="present-number">02</div><div class="present-type" data-i18n="pres2_type">Weekly Reporting</div><h3 data-i18n="pres2_title">Performance Reviews & Ad Hoc Analysis</h3><p data-i18n="pres2_desc">Delivered weekly performance reports and deep-dive analyses to department leads, identifying trends and recommending data-driven improvements that contributed to a 15% reduction in incident resolution time.</p><div class="present-meta"><span data-i18n="pres2_m1">📈 Weekly cadence</span><span>⚡ 15% Impact</span></div></div>
+    <div class="present-card reveal"><div class="present-number">03</div><div class="present-type" data-i18n="pres3_type">Technical Translation</div><h3 data-i18n="pres3_title">Business-to-Technical Bridging</h3><p data-i18n="pres3_desc">Acted as the primary bridge between business stakeholders and technical teams at DXC's SAP DCM Operations Center, translating complex requirements into actionable BI solutions and integration components.</p><div class="present-meta"><span data-i18n="pres3_m1">🔗 Cross-functional</span><span>🏢 SAP DCM</span></div></div>
+    <div class="present-card reveal"><div class="present-number">04</div><div class="present-type" data-i18n="pres4_type">Data Literacy</div><h3 data-i18n="pres4_title">Self-Service BI Enablement</h3><p data-i18n="pres4_desc">Enabled non-technical users to access and interpret data independently by building self-service BI tools with intuitive dashboards and comprehensive documentation.</p><div class="present-meta"><span>📖 Self-service BI</span><span data-i18n="pres4_m2">👥 Non-tech users</span></div></div>
+    <div class="present-card reveal"><div class="present-number">05</div><div class="present-type" data-i18n="pres5_type">Cultural Leadership</div><h3 data-i18n="pres5_title">Head of Cultural Committee</h3><p data-i18n="pres5_desc">Led the college cultural committee, organizing and presenting large-scale events — honing public speaking, coordination, and audience engagement skills that carry into every data presentation I give.</p><div class="present-meta"><span data-i18n="pres5_m1">🎭 Event leadership</span><span data-i18n="pres5_m2">🎤 Public speaking</span></div></div>
+    <div class="present-card reveal"><div class="present-number">06</div><div class="present-type" data-i18n="pres6_type">Project Storytelling</div><h3 data-i18n="pres6_title">ML Outputs to Visual Narratives</h3><p data-i18n="pres6_desc">Built interactive dashboards translating complex ML predictions into clear visual narratives for the Berlin Transport DSS project — enabling non-technical Operations Managers to confidently act on insights.</p><div class="present-meta"><span>🚌 Berlin Transport DSS</span><span>🤖 ML → Story</span></div></div>
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
-  <div class="section-label">Featured Work</div>
-  <h2 class="section-title">Selected Projects</h2>
-  <p class="section-desc">Hands-on projects spanning data architecture, ML pipelines, and decision support systems.</p>
+  <div class="section-label" data-i18n="proj_label">Featured Work</div>
+  <h2 class="section-title" data-i18n="proj_title">Selected Projects</h2>
+  <p class="section-desc" data-i18n="proj_desc">Hands-on projects spanning data architecture, ML pipelines, and decision support systems.</p>
   <div class="projects-grid">
-    <div class="project-card reveal">
-      <a href="https://github.com/Jhanavi-v/Transport-DSS-Project" target="_blank">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#e4d0f4,#c8f0e6)">
-          <div class="overlay"><span class="overlay-text">View on GitHub →</span></div>
-          <svg viewBox="0 0 400 200" style="width:100%;height:100%">
-            <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#b5365a" stop-opacity="0.2"/><stop offset="100%" stop-color="#6b1d4a" stop-opacity="0.1"/></linearGradient></defs>
-            <path d="M0,160 Q60,100 120,130 T240,80 T360,110 L400,100 L400,200 L0,200Z" fill="url(#g1)"/>
-            <path d="M0,180 Q80,130 160,155 T320,110 L400,130 L400,200 L0,200Z" fill="rgba(181,54,90,0.08)"/>
-            <circle cx="120" cy="130" r="4" fill="#b5365a" opacity="0.5"/><circle cx="240" cy="80" r="4" fill="#b5365a" opacity="0.5"/>
-            <circle cx="360" cy="110" r="4" fill="#b5365a" opacity="0.5"/>
-            <text x="200" y="50" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">DSS</text>
-          </svg>
-        </div>
-        <div class="project-info">
-          <div class="project-type">AI-Powered Decision Support</div>
-          <h3>Berlin Transport DSS</h3>
-          <p>End-to-end ML pipeline integrating ridership, weather, and demand data for predictive transport planning during major Berlin events. Interactive dashboards for operational decisions.</p>
-          <div class="project-tags">
-            <span>Python</span><span>ML Pipeline</span><span>Data Viz</span><span>KPI Engineering</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="project-card reveal">
-      <a href="https://github.com/Jhanavi-v/Music-Streaming-Data-Architecture" target="_blank">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#f7c5cc,#e4d0f4)">
-          <div class="overlay"><span class="overlay-text">View on GitHub →</span></div>
-          <svg viewBox="0 0 400 200" style="width:100%;height:100%">
-            <rect x="50" y="120" width="40" height="60" rx="6" fill="rgba(181,54,90,0.12)"/>
-            <rect x="110" y="80" width="40" height="100" rx="6" fill="rgba(181,54,90,0.18)"/>
-            <rect x="170" y="100" width="40" height="80" rx="6" fill="rgba(181,54,90,0.24)"/>
-            <rect x="230" y="60" width="40" height="120" rx="6" fill="rgba(181,54,90,0.32)"/>
-            <rect x="290" y="40" width="40" height="140" rx="6" fill="rgba(181,54,90,0.4)"/>
-            <text x="200" y="30" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">API</text>
-          </svg>
-        </div>
-        <div class="project-info">
-          <div class="project-type">Data Architecture & APIs</div>
-          <h3>Music Streaming Architecture</h3>
-          <p>Relational PostgreSQL database with RESTful APIs for scalable music streaming. Advanced SQL with window functions, automated testing workflows, and full system validation.</p>
-          <div class="project-tags">
-            <span>PostgreSQL</span><span>REST APIs</span><span>Python</span><span>Postman</span>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="project-card reveal">
-      <a href="https://github.com/Jhanavi-v/Data-analytics" target="_blank">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#c8f0e6,#f0c675)">
-          <div class="overlay"><span class="overlay-text">View on GitHub →</span></div>
-          <svg viewBox="0 0 400 200" style="width:100%;height:100%">
-            <circle cx="200" cy="100" r="55" fill="none" stroke="rgba(181,54,90,0.2)" stroke-width="2"/>
-            <circle cx="200" cy="100" r="35" fill="none" stroke="rgba(181,54,90,0.3)" stroke-width="2"/>
-            <circle cx="200" cy="100" r="15" fill="rgba(181,54,90,0.12)"/>
-            <line x1="200" y1="100" x2="255" y2="100" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/>
-            <line x1="200" y1="100" x2="200" y2="45" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/>
-            <line x1="200" y1="100" x2="160" y2="138" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/>
-            <circle cx="255" cy="100" r="6" fill="rgba(181,54,90,0.15)"/><circle cx="200" cy="45" r="6" fill="rgba(181,54,90,0.15)"/>
-            <circle cx="160" cy="138" r="6" fill="rgba(181,54,90,0.15)"/>
-            <text x="200" y="178" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">ML</text>
-          </svg>
-        </div>
-        <div class="project-info">
-          <div class="project-type">Machine Learning Pipeline</div>
-          <h3>Diabetes Prediction & Screening</h3>
-          <p>Classification pipeline transforming raw clinical data into predictive risk scores using Scikit-learn. Statistical EDA, feature validation, and interpretable probability metrics for screening support.</p>
-          <div class="project-tags">
-            <span>Scikit-learn</span><span>EDA</span><span>Classification</span><span>Python</span>
-          </div>
-        </div>
-      </a>
-    </div>
+    <div class="project-card reveal"><a href="https://github.com/Jhanavi-v/Transport-DSS-Project" target="_blank"><div class="project-thumb" style="background:linear-gradient(135deg,#e4d0f4,#c8f0e6)"><div class="overlay"><span class="overlay-text" data-i18n="proj_github">View on GitHub →</span></div><svg viewBox="0 0 400 200" style="width:100%;height:100%"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#b5365a" stop-opacity="0.2"/><stop offset="100%" stop-color="#6b1d4a" stop-opacity="0.1"/></linearGradient></defs><path d="M0,160 Q60,100 120,130 T240,80 T360,110 L400,100 L400,200 L0,200Z" fill="url(#g1)"/><path d="M0,180 Q80,130 160,155 T320,110 L400,130 L400,200 L0,200Z" fill="rgba(181,54,90,0.08)"/><circle cx="120" cy="130" r="4" fill="#b5365a" opacity="0.5"/><circle cx="240" cy="80" r="4" fill="#b5365a" opacity="0.5"/><circle cx="360" cy="110" r="4" fill="#b5365a" opacity="0.5"/><text x="200" y="50" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">DSS</text></svg></div><div class="project-info"><div class="project-type" data-i18n="proj1_type">AI-Powered Decision Support</div><h3>Berlin Transport DSS</h3><p data-i18n="proj1_desc">End-to-end ML pipeline integrating ridership, weather, and demand data for predictive transport planning during major Berlin events. Interactive dashboards for operational decisions.</p><div class="project-tags"><span>Python</span><span>ML Pipeline</span><span>Data Viz</span><span>KPI Engineering</span></div></div></a></div>
+    <div class="project-card reveal"><a href="https://github.com/Jhanavi-v/Music-Streaming-Data-Architecture" target="_blank"><div class="project-thumb" style="background:linear-gradient(135deg,#f7c5cc,#e4d0f4)"><div class="overlay"><span class="overlay-text" data-i18n="proj_github">View on GitHub →</span></div><svg viewBox="0 0 400 200" style="width:100%;height:100%"><rect x="50" y="120" width="40" height="60" rx="6" fill="rgba(181,54,90,0.12)"/><rect x="110" y="80" width="40" height="100" rx="6" fill="rgba(181,54,90,0.18)"/><rect x="170" y="100" width="40" height="80" rx="6" fill="rgba(181,54,90,0.24)"/><rect x="230" y="60" width="40" height="120" rx="6" fill="rgba(181,54,90,0.32)"/><rect x="290" y="40" width="40" height="140" rx="6" fill="rgba(181,54,90,0.4)"/><text x="200" y="30" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">API</text></svg></div><div class="project-info"><div class="project-type" data-i18n="proj2_type">Data Architecture & APIs</div><h3>Music Streaming Architecture</h3><p data-i18n="proj2_desc">Relational PostgreSQL database with RESTful APIs for scalable music streaming. Advanced SQL with window functions, automated testing workflows, and full system validation.</p><div class="project-tags"><span>PostgreSQL</span><span>REST APIs</span><span>Python</span><span>Postman</span></div></div></a></div>
+    <div class="project-card reveal"><a href="https://github.com/Jhanavi-v/Data-analytics" target="_blank"><div class="project-thumb" style="background:linear-gradient(135deg,#c8f0e6,#f0c675)"><div class="overlay"><span class="overlay-text" data-i18n="proj_github">View on GitHub →</span></div><svg viewBox="0 0 400 200" style="width:100%;height:100%"><circle cx="200" cy="100" r="55" fill="none" stroke="rgba(181,54,90,0.2)" stroke-width="2"/><circle cx="200" cy="100" r="35" fill="none" stroke="rgba(181,54,90,0.3)" stroke-width="2"/><circle cx="200" cy="100" r="15" fill="rgba(181,54,90,0.12)"/><line x1="200" y1="100" x2="255" y2="100" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/><line x1="200" y1="100" x2="200" y2="45" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/><line x1="200" y1="100" x2="160" y2="138" stroke="rgba(181,54,90,0.25)" stroke-width="1.5"/><circle cx="255" cy="100" r="6" fill="rgba(181,54,90,0.15)"/><circle cx="200" cy="45" r="6" fill="rgba(181,54,90,0.15)"/><circle cx="160" cy="138" r="6" fill="rgba(181,54,90,0.15)"/><text x="200" y="178" text-anchor="middle" font-family="Playfair Display,serif" font-size="16" fill="#6b1d4a" opacity="0.4">ML</text></svg></div><div class="project-info"><div class="project-type" data-i18n="proj3_type">Machine Learning Pipeline</div><h3 data-i18n="proj3_title">Diabetes Prediction & Screening</h3><p data-i18n="proj3_desc">Classification pipeline transforming raw clinical data into predictive risk scores using Scikit-learn. Statistical EDA, feature validation, and interpretable probability metrics for screening support.</p><div class="project-tags"><span>Scikit-learn</span><span>EDA</span><span>Classification</span><span>Python</span></div></div></a></div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience" style="background:linear-gradient(180deg,var(--cream),rgba(200,240,230,0.1),var(--cream))">
-  <div class="section-label">Journey</div>
-  <h2 class="section-title">Experience & Education</h2>
+  <div class="section-label" data-i18n="exp_label">Journey</div>
+  <h2 class="section-title" data-i18n="exp_title">Experience & Education</h2>
   <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">09/2025 — 09/2027</div>
-      <h3>MSc in Data Science</h3>
-      <div class="company">University of Europe for Applied Sciences · Potsdam, Germany</div>
-      <p>Deepening expertise in machine learning, predictive analytics, advanced data engineering, and AI-driven automation. Building hands-on projects in NLP, computer vision, and decision support systems.</p>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">09/2022 — 03/2025</div>
-      <h3>Data & Infrastructure Analyst</h3>
-      <div class="company">DXC Technology Ltd</div>
-      <p>Designed 10+ interactive Power BI dashboards for the SAP DCM Operations Center. Extracted and prepared complex datasets from SQL databases across 5+ cross-functional teams. Translated business requirements into BI solutions, delivered weekly performance reports, and drove a 15% reduction in incident resolution time through data-driven recommendations.</p>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">Completed</div>
-      <h3>BE in Electronics & Communication</h3>
-      <div class="company">Visvesvaraya Technological University · Bengaluru, India</div>
-      <p>Built a strong engineering foundation. Served as Head of the College Cultural Committee, leading large-scale events and developing public speaking and organizational leadership skills.</p>
-    </div>
+    <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-date">09/2025 — 09/2027</div><h3>MSc in Data Science</h3><div class="company">University of Europe for Applied Sciences · Potsdam, Germany</div><p data-i18n="exp1_desc">Deepening expertise in machine learning, predictive analytics, advanced data engineering, and AI-driven automation. Building hands-on projects in NLP, computer vision, and decision support systems.</p></div>
+    <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-date">09/2022 — 03/2025</div><h3>Data & Infrastructure Analyst</h3><div class="company">DXC Technology Ltd</div><p data-i18n="exp2_desc">Designed 10+ interactive Power BI dashboards for the SAP DCM Operations Center. Extracted and prepared complex datasets from SQL databases across 5+ cross-functional teams. Translated business requirements into BI solutions, delivered weekly performance reports, and drove a 15% reduction in incident resolution time through data-driven recommendations.</p></div>
+    <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-date" data-i18n="exp3_date">Completed</div><h3>BE in Electronics & Communication</h3><div class="company">Visvesvaraya Technological University · Bengaluru, India</div><p data-i18n="exp3_desc">Built a strong engineering foundation. Served as Head of the College Cultural Committee, leading large-scale events and developing public speaking and organizational leadership skills.</p></div>
   </div>
 </section>
 
-<!-- TECH STACK -->
 <section>
-  <div class="section-label">Tools</div>
-  <h2 class="section-title">Tech Stack</h2>
-  <p class="section-desc">The tools and frameworks I use to bring data to life.</p>
+  <div class="section-label" data-i18n="tech_label">Tools</div>
+  <h2 class="section-title" data-i18n="tech_title">Tech Stack</h2>
+  <p class="section-desc" data-i18n="tech_desc">The tools and frameworks I use to bring data to life.</p>
   <div class="tech-grid">
     <div class="tech-pill reveal"><div class="tech-dot" style="background:var(--berry)"></div><span>Python</span></div>
     <div class="tech-pill reveal"><div class="tech-dot" style="background:#336791"></div><span>SQL</span></div>
@@ -817,41 +326,36 @@ footer .footer-brand{font-family:'Playfair Display',serif;color:var(--blush);fon
     <div class="tech-pill reveal"><div class="tech-dot" style="background:var(--mint)"></div><span>RAG Concepts</span></div>
     <div class="tech-pill reveal"><div class="tech-dot" style="background:#217346"></div><span>Excel</span></div>
   </div>
-
-  <!-- LANGUAGES -->
   <div style="margin-top:4rem">
-    <div class="section-label">Languages</div>
-    <h2 class="section-title" style="font-size:1.8rem">I Speak</h2>
+    <div class="section-label" data-i18n="lang_label">Languages</div>
+    <h2 class="section-title" style="font-size:1.8rem" data-i18n="lang_title">I Speak</h2>
     <div class="lang-grid">
-      <div class="lang-card reveal"><h4>Kannada</h4><div class="level">Native</div></div>
-      <div class="lang-card reveal"><h4>English</h4><div class="level">Fluent · C2</div></div>
-      <div class="lang-card reveal"><h4>Hindi</h4><div class="level">Fluent · C2</div></div>
-      <div class="lang-card reveal"><h4>German</h4><div class="level">B1 · Learning</div></div>
+      <div class="lang-card reveal"><h4>Kannada</h4><div class="level" data-i18n="lang_native">Native</div></div>
+      <div class="lang-card reveal"><h4>English</h4><div class="level" data-i18n="lang_en">Fluent · C2</div></div>
+      <div class="lang-card reveal"><h4>Hindi</h4><div class="level" data-i18n="lang_hi">Fluent · C2</div></div>
+      <div class="lang-card reveal"><h4>German</h4><div class="level" data-i18n="lang_de">B1 · Learning</div></div>
     </div>
   </div>
-
-  <!-- HOBBIES -->
   <div style="margin-top:4rem">
-    <div class="section-label">Beyond Data</div>
-    <h2 class="section-title" style="font-size:1.8rem">When I'm Not Coding</h2>
+    <div class="section-label" data-i18n="hobby_label">Beyond Data</div>
+    <h2 class="section-title" style="font-size:1.8rem" data-i18n="hobby_title">When I'm Not Coding</h2>
     <div class="hobbies-strip">
-      <div class="hobby-tag">🧩 Problem-Solving Puzzles</div>
-      <div class="hobby-tag">🌌 Stargazing</div>
-      <div class="hobby-tag">📚 Reading Books</div>
-      <div class="hobby-tag">🏸 Badminton</div>
-      <div class="hobby-tag">🎨 Painting</div>
-      <div class="hobby-tag">💃 Kathak</div>
+      <div class="hobby-tag" data-i18n="h1">🧩 Problem-Solving Puzzles</div>
+      <div class="hobby-tag" data-i18n="h2">🌌 Stargazing</div>
+      <div class="hobby-tag" data-i18n="h3">📚 Reading Books</div>
+      <div class="hobby-tag" data-i18n="h4">🏸 Badminton</div>
+      <div class="hobby-tag" data-i18n="h5">🎨 Painting</div>
+      <div class="hobby-tag" data-i18n="h6">💃 Kathak</div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section id="contact" class="cta-section">
-  <div class="section-label" style="justify-content:center">Let's Connect</div>
-  <h2>Ready to <em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--berry)">collaborate?</em></h2>
-  <p>Whether it's a data science project, a speaking opportunity, or just a chat about the latest in ML — I'd love to hear from you.</p>
+  <div class="section-label" style="justify-content:center" data-i18n="cta_label">Let's Connect</div>
+  <h2 data-i18n-html="cta_title">Ready to <em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--berry)">collaborate?</em></h2>
+  <p data-i18n="cta_desc">Whether it's a data science project, a speaking opportunity, or just a chat about the latest in ML — I'd love to hear from you.</p>
   <div class="cta-buttons">
-    <a href="mailto:jhanaviv6@gmail.com" class="btn-primary">Say Hello ✉</a>
+    <a href="mailto:jhanaviv6@gmail.com" class="btn-primary" data-i18n="cta_hello">Say Hello ✉</a>
     <a href="https://github.com/Jhanavi-v" target="_blank" class="btn-secondary">GitHub →</a>
   </div>
   <div class="cta-links">
@@ -861,10 +365,9 @@ footer .footer-brand{font-family:'Playfair Display',serif;color:var(--blush);fon
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-brand">Jhanavi<span style="color:var(--rose);font-style:italic">V.</span></div>
-  <div style="font-size:0.8rem">Designed with 💗 and lots of data · Berlin, Germany</div>
+  <div style="font-size:0.8rem" data-i18n="footer_tagline">Designed with 💗 and lots of data · Berlin, Germany</div>
   <div class="footer-links">
     <a href="https://github.com/Jhanavi-v" target="_blank">GitHub</a>
     <a href="https://linkedin.com/in/jhanavi-venkatesh-240b16213" target="_blank">LinkedIn</a>
@@ -873,22 +376,105 @@ footer .footer-brand{font-family:'Playfair Display',serif;color:var(--blush);fon
 </footer>
 
 <script>
+const i18n={
+en:{
+  nav_about:"About",nav_skills:"Skills",nav_presenting:"Speaking",nav_projects:"Projects",nav_experience:"Experience",nav_connect:"Let's Connect",
+  hero_tag:"MSc Data Science · Berlin, Germany",
+  hero_title:'Turning <span class="gradient">data</span> into<br>stories that <em>matter</em>',
+  hero_desc:"Data Scientist & ML enthusiast with 2.5 years of experience building BI solutions, ML pipelines, and presenting complex insights to cross-functional teams. Currently pursuing my MSc in Data Science at UE Potsdam.",
+  hero_btn_work:"View My Work →",hero_btn_contact:"Get In Touch",
+  card_effort:"Reporting Effort Saved",card_dashboards:"Power BI Dashboards",card_teams:"Cross-Functional Teams",
+  about_label:"About Me",about_title:"Hi, I'm Jhanavi ✨",
+  about_p1:'I\'m a <span class="highlight">data-driven analytics professional</span> currently pursuing my MSc in Data Science at the University of Europe for Applied Sciences in Potsdam, Germany. With a background in Electronics & Communication Engineering from Visvesvaraya Technological University and 2.5 years at DXC Technology, I\'ve built a strong foundation in translating complex data into clear, impactful stories.',
+  about_p2:'I\'m passionate about <span class="highlight">machine learning, predictive analytics, and AI-driven automation</span> — and equally passionate about communicating those insights to real people. Whether it\'s presenting dashboards to C-suite stakeholders, leading cultural events as head of my college cultural committee, or workshopping data literacy with non-technical teams, I thrive at the intersection of tech and communication.',
+  about_p3:"When I'm not wrangling data, you'll find me stargazing, painting, practicing Kathak, solving puzzles, or on the badminton court.",
+  stat_years:"Years Experience",stat_dashboards:"Dashboards Built",stat_reporting:"Reporting Effort Reduced",stat_incident:"Faster Incident Resolution",
+  skills_label:"What I Do",skills_title:"Core Expertise",skills_desc:"Bridging the gap between complex ML models and real-world impact through technical depth and clear communication.",
+  skill1_title:"Data Science & Analytics",skill1_desc:"End-to-end BI projects — from SQL data extraction and preparation to interactive dashboard delivery. Skilled in building robust data models and visualizations that drive decisions across Operations, Finance, and Marketing.",
+  skill2_title:"Machine Learning & AI",skill2_desc:"Building ML pipelines from feature engineering through model training and deployment. Experience with classification models, predictive analytics, NLP, and emerging AI workflows including LLM prompt engineering and RAG concepts.",
+  skill3_title:"Presenting & Storytelling",skill3_desc:"Translating complex analytical outputs into intuitive visual narratives for diverse audiences — from weekly stakeholder reports to executive dashboards. Experienced in leading workshops, cultural events, and cross-functional communications.",
+  pres_label:"Communication & Leadership",pres_title:"Presenting & Storytelling",pres_desc:"I believe the best data science is the kind that gets communicated. Here's how I bring data to life for real audiences.",
+  pres1_type:"Stakeholder Dashboards",pres1_title:"Executive BI Reporting",pres1_desc:"Designed and presented 10+ interactive Power BI dashboards to department leads across Marketing, Finance, and Operations — translating complex KPIs into clear visual stories that drove decision-making.",
+  pres2_type:"Weekly Reporting",pres2_title:"Performance Reviews & Ad Hoc Analysis",pres2_desc:"Delivered weekly performance reports and deep-dive analyses to department leads, identifying trends and recommending data-driven improvements that contributed to a 15% reduction in incident resolution time.",pres2_m1:"📈 Weekly cadence",
+  pres3_type:"Technical Translation",pres3_title:"Business-to-Technical Bridging",pres3_desc:"Acted as the primary bridge between business stakeholders and technical teams at DXC's SAP DCM Operations Center, translating complex requirements into actionable BI solutions and integration components.",pres3_m1:"🔗 Cross-functional",
+  pres4_type:"Data Literacy",pres4_title:"Self-Service BI Enablement",pres4_desc:"Enabled non-technical users to access and interpret data independently by building self-service BI tools with intuitive dashboards and comprehensive documentation.",pres4_m2:"👥 Non-tech users",
+  pres5_type:"Cultural Leadership",pres5_title:"Head of Cultural Committee",pres5_desc:"Led the college cultural committee, organizing and presenting large-scale events — honing public speaking, coordination, and audience engagement skills that carry into every data presentation I give.",pres5_m1:"🎭 Event leadership",pres5_m2:"🎤 Public speaking",
+  pres6_type:"Project Storytelling",pres6_title:"ML Outputs to Visual Narratives",pres6_desc:"Built interactive dashboards translating complex ML predictions into clear visual narratives for the Berlin Transport DSS project — enabling non-technical Operations Managers to confidently act on insights.",
+  proj_label:"Featured Work",proj_title:"Selected Projects",proj_desc:"Hands-on projects spanning data architecture, ML pipelines, and decision support systems.",proj_github:"View on GitHub →",
+  proj1_type:"AI-Powered Decision Support",proj1_desc:"End-to-end ML pipeline integrating ridership, weather, and demand data for predictive transport planning during major Berlin events. Interactive dashboards for operational decisions.",
+  proj2_type:"Data Architecture & APIs",proj2_desc:"Relational PostgreSQL database with RESTful APIs for scalable music streaming. Advanced SQL with window functions, automated testing workflows, and full system validation.",
+  proj3_type:"Machine Learning Pipeline",proj3_title:"Diabetes Prediction & Screening",proj3_desc:"Classification pipeline transforming raw clinical data into predictive risk scores using Scikit-learn. Statistical EDA, feature validation, and interpretable probability metrics for screening support.",
+  exp_label:"Journey",exp_title:"Experience & Education",
+  exp1_desc:"Deepening expertise in machine learning, predictive analytics, advanced data engineering, and AI-driven automation. Building hands-on projects in NLP, computer vision, and decision support systems.",
+  exp2_desc:"Designed 10+ interactive Power BI dashboards for the SAP DCM Operations Center. Extracted and prepared complex datasets from SQL databases across 5+ cross-functional teams. Translated business requirements into BI solutions, delivered weekly performance reports, and drove a 15% reduction in incident resolution time through data-driven recommendations.",
+  exp3_date:"Completed",exp3_desc:"Built a strong engineering foundation. Served as Head of the College Cultural Committee, leading large-scale events and developing public speaking and organizational leadership skills.",
+  tech_label:"Tools",tech_title:"Tech Stack",tech_desc:"The tools and frameworks I use to bring data to life.",
+  lang_label:"Languages",lang_title:"I Speak",lang_native:"Native",lang_en:"Fluent · C2",lang_hi:"Fluent · C2",lang_de:"B1 · Learning",
+  hobby_label:"Beyond Data",hobby_title:"When I'm Not Coding",
+  h1:"🧩 Problem-Solving Puzzles",h2:"🌌 Stargazing",h3:"📚 Reading Books",h4:"🏸 Badminton",h5:"🎨 Painting",h6:"💃 Kathak",
+  cta_label:"Let's Connect",cta_title:'Ready to <em style="font-family:\'Playfair Display\',serif;font-style:italic;color:var(--berry)">collaborate?</em>',cta_desc:"Whether it's a data science project, a speaking opportunity, or just a chat about the latest in ML — I'd love to hear from you.",cta_hello:"Say Hello ✉",
+  footer_tagline:"Designed with 💗 and lots of data · Berlin, Germany"
+},
+de:{
+  nav_about:"Über mich",nav_skills:"Fähigkeiten",nav_presenting:"Vorträge",nav_projects:"Projekte",nav_experience:"Erfahrung",nav_connect:"Kontakt",
+  hero_tag:"MSc Data Science · Berlin, Deutschland",
+  hero_title:'Aus <span class="gradient">Daten</span> werden<br>Geschichten, die <em>bewegen</em>',
+  hero_desc:"Data Scientist & ML-Enthusiastin mit 2,5 Jahren Erfahrung im Aufbau von BI-Lösungen, ML-Pipelines und der Präsentation komplexer Erkenntnisse für funktionsübergreifende Teams. Derzeit im MSc Data Science an der UE Potsdam.",
+  hero_btn_work:"Meine Arbeit ansehen →",hero_btn_contact:"Kontakt aufnehmen",
+  card_effort:"Berichtsaufwand gespart",card_dashboards:"Power BI Dashboards",card_teams:"Funktionsübergr. Teams",
+  about_label:"Über mich",about_title:"Hi, ich bin Jhanavi ✨",
+  about_p1:'Ich bin eine <span class="highlight">datengetriebene Analystin</span>, die derzeit ihren MSc in Data Science an der University of Europe for Applied Sciences in Potsdam absolviert. Mit einem Hintergrund in Elektronik & Kommunikationstechnik der Visvesvaraya Technological University und 2,5 Jahren bei DXC Technology habe ich eine starke Grundlage in der Übersetzung komplexer Daten in klare, wirkungsvolle Geschichten aufgebaut.',
+  about_p2:'Ich begeistere mich für <span class="highlight">Machine Learning, Predictive Analytics und KI-gestützte Automatisierung</span> — und ebenso für die Kommunikation dieser Erkenntnisse. Ob bei der Präsentation von Dashboards für Führungskräfte, der Leitung kultureller Veranstaltungen oder bei Data-Literacy-Workshops — ich fühle mich an der Schnittstelle von Technik und Kommunikation zu Hause.',
+  about_p3:"Wenn ich keine Daten analysiere, findet man mich beim Sternegucken, Malen, Kathak-Tanzen, Rätsellösen oder auf dem Badminton-Platz.",
+  stat_years:"Jahre Erfahrung",stat_dashboards:"Dashboards erstellt",stat_reporting:"Berichtsaufwand reduziert",stat_incident:"Schnellere Vorfallslösung",
+  skills_label:"Was ich mache",skills_title:"Kernkompetenzen",skills_desc:"Ich verbinde komplexe ML-Modelle mit realer Wirkung — durch technische Tiefe und klare Kommunikation.",
+  skill1_title:"Data Science & Analytics",skill1_desc:"End-to-End-BI-Projekte — von der SQL-Datenextraktion bis zur interaktiven Dashboard-Bereitstellung. Erfahren im Aufbau robuster Datenmodelle und Visualisierungen für Operations, Finance und Marketing.",
+  skill2_title:"Machine Learning & KI",skill2_desc:"Aufbau von ML-Pipelines vom Feature Engineering über Modelltraining bis zum Deployment. Erfahrung mit Klassifikationsmodellen, Predictive Analytics, NLP und neuen KI-Workflows inkl. LLM Prompt Engineering und RAG.",
+  skill3_title:"Präsentation & Storytelling",skill3_desc:"Übersetzung komplexer analytischer Ergebnisse in intuitive visuelle Geschichten für unterschiedliche Zielgruppen — von wöchentlichen Stakeholder-Berichten bis zu Executive Dashboards.",
+  pres_label:"Kommunikation & Führung",pres_title:"Präsentation & Storytelling",pres_desc:"Ich glaube, die beste Data Science ist die, die kommuniziert wird. So bringe ich Daten für reale Zielgruppen zum Leben.",
+  pres1_type:"Stakeholder-Dashboards",pres1_title:"Executive BI-Reporting",pres1_desc:"10+ interaktive Power BI-Dashboards für Abteilungsleiter in Marketing, Finance und Operations entworfen und präsentiert — komplexe KPIs in klare visuelle Geschichten übersetzt.",
+  pres2_type:"Wöchentliches Reporting",pres2_title:"Leistungsberichte & Ad-hoc-Analysen",pres2_desc:"Wöchentliche Leistungsberichte und Tiefenanalysen für Abteilungsleiter, Trends identifiziert und datengestützte Verbesserungen empfohlen — 15% schnellere Vorfallslösung.",pres2_m1:"📈 Wöchentlicher Rhythmus",
+  pres3_type:"Technische Übersetzung",pres3_title:"Business-Technical Brücke",pres3_desc:"Primäre Schnittstelle zwischen Business-Stakeholdern und technischen Teams im SAP DCM Operations Center — komplexe Anforderungen in umsetzbare BI-Lösungen übersetzt.",pres3_m1:"🔗 Funktionsübergreifend",
+  pres4_type:"Datenkompetenz",pres4_title:"Self-Service BI-Befähigung",pres4_desc:"Nicht-technischen Nutzern den eigenständigen Datenzugang ermöglicht — durch Self-Service-BI-Tools mit intuitiven Dashboards und umfassender Dokumentation.",pres4_m2:"👥 Nicht-tech. Nutzer",
+  pres5_type:"Kulturelle Führung",pres5_title:"Vorsitzende des Kulturkomitees",pres5_desc:"Das Kulturkomitee der Hochschule geleitet und Großveranstaltungen organisiert — Fähigkeiten in Rhetorik und Publikumsansprache entwickelt, die jede Datenpräsentation bereichern.",pres5_m1:"🎭 Eventleitung",pres5_m2:"🎤 Rhetorik",
+  pres6_type:"Projekt-Storytelling",pres6_title:"ML-Ergebnisse als visuelle Geschichten",pres6_desc:"Interaktive Dashboards, die komplexe ML-Vorhersagen in klare Narrationen übersetzen — für das Berliner Transport-DSS-Projekt.",
+  proj_label:"Ausgewählte Arbeit",proj_title:"Ausgewählte Projekte",proj_desc:"Praxisprojekte in Datenarchitektur, ML-Pipelines und Entscheidungsunterstützungssystemen.",proj_github:"Auf GitHub ansehen →",
+  proj1_type:"KI-gestütztes Entscheidungssystem",proj1_desc:"End-to-End-ML-Pipeline für prädiktive Transportplanung bei Berliner Großveranstaltungen. Interaktive Dashboards für operative Entscheidungen.",
+  proj2_type:"Datenarchitektur & APIs",proj2_desc:"Relationale PostgreSQL-Datenbank mit RESTful APIs für skalierbares Musik-Streaming. Fortgeschrittenes SQL mit Window Functions und automatisierten Testworkflows.",
+  proj3_type:"Machine Learning Pipeline",proj3_title:"Diabetes-Vorhersage & Screening",proj3_desc:"Klassifikationspipeline zur Umwandlung klinischer Rohdaten in prädiktive Risikoscores mit Scikit-learn. Statistische EDA und interpretierbare Wahrscheinlichkeitsmetriken.",
+  exp_label:"Werdegang",exp_title:"Erfahrung & Ausbildung",
+  exp1_desc:"Vertiefung von Machine Learning, Predictive Analytics, Data Engineering und KI-Automatisierung. Praktische Projekte in NLP, Computer Vision und Entscheidungsunterstützungssystemen.",
+  exp2_desc:"10+ interaktive Power BI-Dashboards für das SAP DCM Operations Center entworfen. Komplexe Datensätze aus SQL-Datenbanken für 5+ Teams extrahiert. Geschäftsanforderungen in BI-Lösungen übersetzt und 15% schnellere Vorfallslösung durch datengestützte Empfehlungen erreicht.",
+  exp3_date:"Abgeschlossen",exp3_desc:"Starke ingenieurwissenschaftliche Grundlage. Vorsitzende des Kulturkomitees — Großveranstaltungen geleitet und Fähigkeiten in Rhetorik und Führung entwickelt.",
+  tech_label:"Werkzeuge",tech_title:"Tech Stack",tech_desc:"Die Werkzeuge und Frameworks, mit denen ich Daten zum Leben erwecke.",
+  lang_label:"Sprachen",lang_title:"Ich spreche",lang_native:"Muttersprache",lang_en:"Fließend · C2",lang_hi:"Fließend · C2",lang_de:"B1 · Lernend",
+  hobby_label:"Jenseits der Daten",hobby_title:"Wenn ich nicht programmiere",
+  h1:"🧩 Knobel-Rätsel",h2:"🌌 Sternegucken",h3:"📚 Bücher lesen",h4:"🏸 Badminton",h5:"🎨 Malen",h6:"💃 Kathak",
+  cta_label:"Kontakt",cta_title:'Bereit für eine <em style="font-family:\'Playfair Display\',serif;font-style:italic;color:var(--berry)">Zusammenarbeit?</em>',cta_desc:"Ob Data-Science-Projekt, Vortrag oder einfach ein Gespräch über die neuesten ML-Trends — ich freue mich auf Ihre Nachricht.",cta_hello:"Hallo sagen ✉",
+  footer_tagline:"Gestaltet mit 💗 und vielen Daten · Berlin, Deutschland"
+}};
+
+let currentLang='en';
+const toggle=document.getElementById('langToggle');
+toggle.addEventListener('click',()=>{
+  currentLang=currentLang==='en'?'de':'en';
+  toggle.dataset.lang=currentLang;
+  toggle.querySelectorAll('.lang-opt').forEach(o=>o.classList.toggle('active',o.dataset.l===currentLang));
+  document.documentElement.lang=currentLang;
+  applyTranslations();
+});
+function applyTranslations(){
+  const t=i18n[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k])el.textContent=t[k]});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.getAttribute('data-i18n-html');if(t[k])el.innerHTML=t[k]});
+}
+
 const nav=document.getElementById('navbar');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>50)});
 const reveals=document.querySelectorAll('.reveal');
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach((entry,i)=>{
-    if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*100);observer.unobserve(entry.target)}
-  });
-},{threshold:0.1});
+const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*100);observer.unobserve(entry.target)}})},{threshold:0.1});
 reveals.forEach(el=>observer.observe(el));
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-  anchor.addEventListener('click',function(e){
-    e.preventDefault();
-    const target=document.querySelector(this.getAttribute('href'));
-    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
-  });
-});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
 </script>
 </body>
 </html>
